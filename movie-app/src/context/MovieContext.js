@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { cachedMovieApi } from '../services/api';
+import { cachedMovieApi, movieApi } from '../services/Api';
 
 const MovieContext = createContext();
 
@@ -156,7 +156,7 @@ export const MovieProvider = ({ children }) => {
     dispatch({ type: MOVIE_ACTIONS.SET_LOADING, payload: true });
     
     try {
-      const data = await cachedMovieApi.getTrendingMovies(timeWindow);
+      const data = await movieApi.getTrendingMovies(timeWindow);
       dispatch({ type: MOVIE_ACTIONS.SET_TRENDING_MOVIES, payload: data });
     } catch (error) {
       dispatch({ type: MOVIE_ACTIONS.SET_ERROR, payload: error.message });
@@ -199,7 +199,8 @@ export const MovieProvider = ({ children }) => {
   // Fetch genres
   const fetchGenres = async () => {
     try {
-      const genres = await cachedMovieApi.getGenres();
+      // const genres = await cachedMovieApi.getGenres();
+      const genres = await movieApi.getGenres();
       dispatch({ type: MOVIE_ACTIONS.SET_GENRES, payload: genres });
     } catch (error) {
       dispatch({ type: MOVIE_ACTIONS.SET_ERROR, payload: error.message });
