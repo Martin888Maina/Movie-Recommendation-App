@@ -46,6 +46,9 @@ export const authService = {
         });
       }
       
+      // Sign out the user immediately after registration
+      await signOut(auth);
+      
       return {
         success: true,
         user: {

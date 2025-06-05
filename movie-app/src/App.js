@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -5,7 +6,7 @@ import './App.css';
 
 // Context Providers
 import { AuthProvider } from './context/AuthContext';
-import { MovieProvider } from './context/MovieContext';
+import { MovieProvider } from './context/MovieContext'; 
 
 // Components
 import Header from './components/layout/Header';
@@ -19,7 +20,7 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
-          <MovieProvider>
+          <MovieProvider> 
             <div className="d-flex flex-column min-vh-100">
               <Header />
               <main className="flex-grow-1">

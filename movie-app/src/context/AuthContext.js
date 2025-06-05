@@ -1,3 +1,4 @@
+// context/AuthContext.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { authService } from '../services/Auth';
 
@@ -48,9 +49,8 @@ export const AuthProvider = ({ children }) => {
     
     const result = await authService.register(email, password, displayName);
     
-    if (result.success) {
-      setUser(result.user);
-    } else {
+    // Prevents automatic login after registration
+    if (!result.success) {
       setError(result.error);
     }
     

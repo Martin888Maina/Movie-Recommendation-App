@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { imageUtils } from '../services/Api';
+import '../styles/MovieCard.css';
 
 
 const MovieCard = ({ movie, showRating = true, showOverview = false, size = 'medium' }) => {
@@ -16,7 +17,6 @@ const MovieCard = ({ movie, showRating = true, showOverview = false, size = 'med
     release_date,
     vote_average,
     overview,
-    // genre_ids = []
   } = movie;
 
   const posterUrl = imageUtils.getPosterUrl(poster_path);
@@ -123,7 +123,6 @@ const MovieCard = ({ movie, showRating = true, showOverview = false, size = 'med
           className="action-btn wishlist-btn"
           onClick={(e) => {
             e.preventDefault();
-            // TODO: Implement wishlist functionality
             console.log('Add to wishlist:', movie.id);
           }}
           title="Add to Wishlist"
@@ -137,7 +136,6 @@ const MovieCard = ({ movie, showRating = true, showOverview = false, size = 'med
           className="action-btn share-btn"
           onClick={(e) => {
             e.preventDefault();
-            // TODO: Implement share functionality
             if (navigator.share) {
               navigator.share({
                 title: title,
@@ -145,7 +143,6 @@ const MovieCard = ({ movie, showRating = true, showOverview = false, size = 'med
                 url: `${window.location.origin}/movie/${id}`
               });
             } else {
-              // Fallback: copy to clipboard
               navigator.clipboard.writeText(`${window.location.origin}/movie/${id}`);
               alert('Link copied to clipboard!');
             }

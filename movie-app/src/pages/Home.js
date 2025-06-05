@@ -1,54 +1,68 @@
+// Home.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useMovies } from '../context/MovieContext';
 import { useAuth } from '../context/AuthContext';
+import { useMovies } from '../context/MovieContext';
+import { cachedMovieApi } from '../services/Api';
 import MovieList from '../pages/MovieList';
-import { cachedMovieApi, movieApi } from '../services/Api';
+import '../styles/Home.css';
 
 const Home = () => {
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [activeSection, setActiveSection] = useState('popular');
   const { user } = useAuth();
-  const { setMovies } = useMovies();
+  const {
+    trendingMovies,
+    genres,
+    loading: contextLoading,
+    error: contextError,
+    fetchTrendingMovies,
+    fetchGenres
+  } = useMovies();
 
-  useEffect(() => {
-  const fetchHomeData = async () => {
-    setLoading(true);
-    setError('');
+  const [activeSection, setActiveSection] = useState('popular');
+  
+  // Pagination state for popular movies
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [popularLoading, setPopularLoading] = useState(false);
+  const [popularError, setPopularError] = useState(null);
 
+  // Fetch popular movies with pagination
+  const fetchPopularMovies = async (page = 1) => {
+    setPopularLoading(true);
+    setPopularError(null);
+    
     try {
-      const [popularData, trendingData, genresData] = await Promise.all([
-        cachedMovieApi.getPopularMovies(1),
-        movieApi.getTrendingMovies('day'),
-        movieApi.getGenres()
-      ]);
-
-      setPopularMovies(popularData.results);
-      setTrendingMovies(trendingData.results);
-      setGenres(genresData);
-      setMovies(popularData.results);
+      const data = await cachedMovieApi.getPopularMovies(page);
+      setPopularMovies(data.results || []);
+      setTotalPages(data.total_pages || 1);
+      setCurrentPage(data.page || 1);
     } catch (err) {
-      setError('Failed to load movies. Please try again.');
-      console.error('Error fetching home data:', err);
+      setPopularError(err.message || 'Failed to fetch popular movies');
+      console.error('Error fetching popular movies:', err);
     } finally {
-      setLoading(false);
+      setPopularLoading(false);
     }
   };
 
-  fetchHomeData();
-}, [setMovies]);
+  // Handle page change for popular movies
+  const handlePageChange = (newPage) => {
+    if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      fetchPopularMovies(newPage);
+    }
+  };
+
+  useEffect(() => {
+    // Load initial data
+    fetchPopularMovies(1);
+    fetchTrendingMovies('day');
+    fetchGenres();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
-    if (section === 'popular') {
-      setMovies(popularMovies);
-    } else if (section === 'trending') {
-      setMovies(trendingMovies);
-    }
   };
 
   const getGreeting = () => {
@@ -58,9 +72,15 @@ const Home = () => {
     return 'Good evening';
   };
 
+  // Extract results arrays safely
+  const trendingResults = trendingMovies?.results || [];
   const featuredMovie = popularMovies[0];
 
-  if (loading) {
+  // Determine loading and error states
+  const isLoading = contextLoading || (popularLoading && popularMovies.length === 0);
+  const error = contextError || popularError;
+
+  if (isLoading) {
     return (
       <div className="home-container">
         <div className="loader-container">
@@ -76,9 +96,9 @@ const Home = () => {
         <div className="error-container">
           <h2>Oops! Something went wrong</h2>
           <p>{error}</p>
-         <button onClick={() => window.location.reload()} className="retry-btn">
+          <button onClick={() => window.location.reload()} className="retry-btn">
             Try Again
-         </button>
+          </button>
         </div>
       </div>
     );
@@ -89,7 +109,7 @@ const Home = () => {
       {/* Hero Section */}
       {featuredMovie && (
         <section className="hero-section">
-          <div 
+          <div
             className="hero-backdrop"
             style={{
               backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/w1280${featuredMovie.backdrop_path})`
@@ -99,10 +119,9 @@ const Home = () => {
               <div className="hero-text">
                 <h1 className="hero-title">{featuredMovie.title}</h1>
                 <p className="hero-overview">
-                  {featuredMovie.overview.length > 200 
+                  {featuredMovie.overview.length > 200
                     ? `${featuredMovie.overview.substring(0, 200)}...`
-                    : featuredMovie.overview
-                  }
+                    : featuredMovie.overview}
                 </p>
                 <div className="hero-meta">
                   <span className="rating">
@@ -113,15 +132,10 @@ const Home = () => {
                   </span>
                 </div>
                 <div className="hero-actions">
-                  <Link 
-                    to={`/movie/${featuredMovie.id}`} 
-                    className="btn primary"
-                  >
+                  <Link to={`/movie/${featuredMovie.id}`} className="btn primary">
                     Watch Now
                   </Link>
-                  <button className="btn secondary">
-                    Add to Watchlist
-                  </button>
+                  <button className="btn secondary">Add to Watchlist</button>
                 </div>
               </div>
             </div>
@@ -133,11 +147,10 @@ const Home = () => {
       <section className="welcome-section">
         <div className="container">
           <h2 className="welcome-title">
-            {getGreeting()}{user ? `, ${user.displayName || user.email}` : ''}!
+            {getGreeting()}
+            {user ? `, ${user.displayName || user.email}` : ''}!
           </h2>
-          <p className="welcome-subtitle">
-            Discover amazing movies and TV shows
-          </p>
+          <p className="welcome-subtitle">Discover amazing movies and TV shows</p>
         </div>
       </section>
 
@@ -172,11 +185,27 @@ const Home = () => {
               See All
             </Link>
           </div>
-          
-          <MovieList 
-            movies={activeSection === 'popular' ? popularMovies : trendingMovies}
-            loading={false}
-          />
+
+          {activeSection === 'popular' ? (
+            <MovieList
+              movies={popularMovies}
+              loading={popularLoading}
+              error={popularError}
+              showPagination={true}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              itemsPerPage={20}
+              title=""
+            />
+          ) : (
+            <MovieList
+              movies={trendingResults}
+              loading={false}
+              showPagination={false}
+              title=""
+            />
+          )}
         </div>
       </section>
 
@@ -209,13 +238,13 @@ const Home = () => {
               <h4>Search Movies</h4>
               <p>Find your next favorite movie</p>
             </Link>
-            
+
             <Link to="/trending" className="action-card">
               <div className="action-icon">🔥</div>
               <h4>What's Hot</h4>
               <p>Discover trending content</p>
             </Link>
-            
+
             <Link to="/top-rated" className="action-card">
               <div className="action-icon">⭐</div>
               <h4>Top Rated</h4>

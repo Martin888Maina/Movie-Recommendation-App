@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { toast } from 'react-toastify';
+import '../styles/Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [displayName, setDisplayName] = useState('');
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { login, register, loginWithGoogle } = useAuth();
+  const isRegistering = useRef(false);
+
+  const { login, register, loginWithGoogle, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
+
+  useEffect(() => {
+    if (user && !isRegistering.current) {
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,8 +38,28 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (error) setError('');
+  };
+
+  const validateForm = () => {
+    if (isRegisterMode) {
+      if (!displayName.trim()) {
+        setError('Display name is required');
+        return false;
+      }
+      
+      if (formData.password.length < 6) {
+        setError('Password should be at least 6 characters long');
+        return false;
+      }
+      
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return false;
+      }
+    }
+    
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -30,39 +67,81 @@ const Login = () => {
     setIsLoading(true);
     setError('');
 
+    if (!validateForm()) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
       let result;
-      
-      // if (isRegisterMode) {
-      //   if (!displayName.trim()) {
-      //     setError('Display name is required');
-      //     setIsLoading(false);
-      //     return;
-      //   }
-      //   result = await authService.register(formData.email, formData.password, displayName);
-      // } else {
-      //   result = await authService.login(formData.email, formData.password);
-      // }
-
       if (isRegisterMode) {
-        if (!displayName.trim()) {
-          setError('Display name is required');
-          setIsLoading(false);
-          return;
-        }
+        isRegistering.current = true;
+        
         result = await register(formData.email, formData.password, displayName);
+        
+        if (result.success) {
+          setRegistrationSuccess(true);
+          setIsRegisterMode(false);
+          setFormData({ email: formData.email, password: '', confirmPassword: '' });
+          setDisplayName('');
+          toast.success('Account created successfully! Please sign in with your credentials.', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        } else {
+          setError(result.error);
+          toast.error(result.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
+        
+        isRegistering.current = false;
       } else {
         result = await login(formData.email, formData.password);
-      }
-
-      if (result.success) {
-        login(result.user);
-        navigate('/');
-      } else {
-        setError(result.error);
+        
+        if (result.success) {
+          toast.success('Welcome back! Login successful.', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          navigate(from, { replace: true });
+        } else {
+          setError(result.error);
+          toast.error(result.error, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      const errorMessage = 'An unexpected error occurred. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      isRegistering.current = false;
     } finally {
       setIsLoading(false);
     }
@@ -75,13 +154,37 @@ const Login = () => {
     try {
       const result = await loginWithGoogle();
       if (result.success) {
-        login(result.user);
-        navigate('/');
+        toast.success('Google sign-in successful! Welcome!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        navigate(from, { replace: true });
       } else {
         setError(result.error);
+        toast.error(result.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (err) {
-      setError('Google sign-in failed. Please try again.');
+      const errorMessage = 'Google sign-in failed. Please try again.';
+      setError(errorMessage);
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -90,8 +193,11 @@ const Login = () => {
   const toggleMode = () => {
     setIsRegisterMode(!isRegisterMode);
     setError('');
-    setFormData({ email: '', password: '' });
+    setRegistrationSuccess(false);
+    setFormData({ email: '', password: '', confirmPassword: '' });
     setDisplayName('');
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   };
 
   return (
@@ -101,7 +207,18 @@ const Login = () => {
           <h1>MovieApp</h1>
           <h2>{isRegisterMode ? 'Create Account' : 'Welcome Back'}</h2>
           <p>{isRegisterMode ? 'Sign up to discover amazing movies' : 'Sign in to your account'}</p>
+          {from !== '/' && (
+            <div className="alert alert-info mt-3">
+              <small>Please sign in to access movie details</small>
+            </div>
+          )}
         </div>
+
+        {registrationSuccess && (
+          <div className="success-message">
+            Account created successfully! Please sign in with your credentials.
+          </div>
+        )}
 
         {error && (
           <div className="error-message">
@@ -139,20 +256,79 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group password-group">
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder="Enter your password"
-              required
-              minLength={6}
-              disabled={isLoading}
-            />
+            <div className="password-input-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder="Enter your password"
+                required
+                minLength={6}
+                disabled={isLoading}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="show-password-btn"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
+
+          {isRegisterMode && (
+            <div className="form-group password-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <div className="password-input-wrapper">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  placeholder="Confirm your password"
+                  required={isRegisterMode}
+                  minLength={6}
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="show-password-btn"
+                  aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                >
+                  {showConfirmPassword ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
 
           <button
             type="submit"

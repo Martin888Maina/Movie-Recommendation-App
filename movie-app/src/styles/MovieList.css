@@ -1,0 +1,621 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* CSS Variables*/
+:root {
+  --primary-color: #1a1a2e;
+  --secondary-color: #16213e;
+  --accent-color: #e94560;
+  --gold-accent: #ffd700;
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8b8;
+  --text-muted: #8a8a8a;
+  --background-dark: #0f0f23;
+  --background-card: rgba(255, 255, 255, 0.05);
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-accent: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  --gradient-success: linear-gradient(135deg, #4ade80 0%, #16a34a 100%);
+  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.4);
+  --shadow-pagination: 0 4px 20px rgba(102, 126, 234, 0.15);
+  --border-radius: 12px;
+  --border-radius-small: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+/* Main Container */
+.movie-list-container {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--background-dark);
+  min-height: 100vh;
+  padding: 2rem 0;
+  color: var(--text-primary);
+}
+
+/* Loading State */
+.movie-list-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem 2rem;
+}
+
+.main-loader {
+  text-align: center;
+}
+
+/* Header Section */
+.movie-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.movie-list-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.movie-list-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+}
+
+/* View Controls */
+.movie-list-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  display: flex;
+  background: var(--background-card);
+  border-radius: 50px;
+  padding: 4px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-soft);
+}
+
+.view-btn {
+  background: transparent;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 50px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.view-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.view-btn.active {
+  background: var(--gradient-primary);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.view-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Results Counter */
+.results-counter {
+  background: var(--background-card);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Movie List Grid */
+.movie-list {
+  display: grid;
+  gap: 2rem;
+  padding: 0 1rem;
+  margin-bottom: 3rem;
+}
+
+.movie-list.grid-view {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.movie-list.list-view {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.movie-list.loading-more {
+  margin-top: 2rem;
+  opacity: 0.7;
+}
+
+/* Loading More Section */
+.loading-more-section {
+  margin-top: 2rem;
+}
+
+.loading-more-indicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+/* Error State */
+.movie-list-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 4rem 2rem;
+}
+
+.error-content {
+  text-align: center;
+  background: var(--background-card);
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+  padding: 3rem;
+  max-width: 500px;
+  box-shadow: var(--shadow-soft);
+}
+
+.error-icon {
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.movie-list-error h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.movie-list-error p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.retry-btn {
+  background: var(--gradient-secondary);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(245, 87, 108, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(245, 87, 108, 0.4);
+}
+
+/* Empty State */
+.movie-list-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 4rem 2rem;
+}
+
+.empty-content {
+  text-align: center;
+  background: var(--background-card);
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  max-width: 500px;
+  box-shadow: var(--shadow-soft);
+}
+
+.empty-icon {
+  color: var(--gold-accent);
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.movie-list-empty h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  color: var(--gold-accent);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.movie-list-empty p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Load More Button */
+.load-more-container {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.load-more-btn {
+  background: var(--gradient-primary);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  min-width: 220px;
+  justify-content: center;
+}
+
+.load-more-btn:hover:not(.loading) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+}
+
+.load-more-btn:disabled,
+.load-more-btn.loading {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Enhanced Pagination Styles */
+.pagination-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1rem 2rem;
+  margin-top: 3rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-pagination);
+}
+
+.pagination-info {
+  text-align: center;
+}
+
+.pagination-summary {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.pagination-count {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-btn {
+  background: var(--background-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  font-size: 0.95rem;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pagination-btn.active {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: var(--text-primary);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  font-weight: 600;
+}
+
+.pagination-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.02);
+  transform: none !important;
+}
+
+.pagination-nav {
+  background: var(--gradient-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-color: transparent;
+}
+
+.pagination-nav:hover:not(.disabled) {
+  background: var(--gradient-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
+}
+
+.pagination-nav.disabled {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+}
+
+.pagination-ellipsis {
+  color: var(--text-muted);
+  padding: 0.75rem 0.5rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+/* Quick Jump to Page */
+.pagination-jump {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--background-card);
+  border-radius: var(--border-radius-small);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.pagination-jump span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.pagination-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-small);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  width: 80px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.pagination-input:focus {
+  outline: none;
+  border-color: rgba(102, 126, 234, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.pagination-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-list-container {
+    padding: 1rem 0;
+  }
+
+  .movie-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .movie-list-title {
+    font-size: 2rem;
+  }
+
+  .movie-list-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .movie-list.grid-view {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .pagination-wrapper {
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .pagination-controls {
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* Hide pagination elements on mobile */
+  .pagination-jump {
+    display: none;
+  }
+
+  /* Pagination on very small screens */
+  .pagination-controls .pagination-btn:not(.pagination-nav):not(.active) {
+    display: none;
+  }
+
+  .pagination-controls .pagination-btn.active {
+    display: flex;
+  }
+
+  .pagination-controls .pagination-btn:nth-child(n+3):nth-child(-n+7) {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-list.grid-view {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .pagination-summary {
+    font-size: 0.875rem;
+  }
+
+  .pagination-count {
+    font-size: 0.75rem;
+  }
+
+  .view-toggle {
+    padding: 2px;
+  }
+
+  .view-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+  }
+
+  .view-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Animation for loading states */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.movie-list > * {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Smooth transitions for view changes */
+.movie-list {
+  transition: var(--transition);
+}
+
+/* Focus styles*/
+.view-btn:focus,
+.pagination-btn:focus,
+.load-more-btn:focus,
+.retry-btn:focus {
+  outline: 2px solid rgba(102, 126, 234, 0.5);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-secondary: #ffffff;
+    --text-muted: #cccccc;
+    --background-card: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .view-btn:hover,
+  .pagination-btn:hover,
+  .load-more-btn:hover,
+  .retry-btn:hover {
+    transform: none;
+  }
+}
+

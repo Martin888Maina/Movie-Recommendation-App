@@ -1,18 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import Button from '../common/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import '../../styles/Header.css';
 
 const Header = () => {
   const { user, logout, loading } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const menuRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    if (showUserMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showUserMenu]);
+
+  // Close dropdown when route changes
+  useEffect(() => {
+    setShowUserMenu(false);
+  }, [location.pathname]);
 
   const handleLogout = async () => {
-    const result = await logout();
-    if (result.success) {
-      navigate('/');
-      setShowUserMenu(false);
+    setLogoutLoading(true);
+    try {
+      const result = await logout();
+      if (result.success) {
+        setShowUserMenu(false);
+        // Redirect to home page after successful logout
+        navigate('/', { replace: true });
+      } else {
+        console.error('Logout failed:', result.error);
+        // Optionally show error message to user
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setLogoutLoading(false);
     }
   };
 
@@ -22,75 +55,96 @@ const Header = () => {
 
   const handleProfile = () => {
     setShowUserMenu(false);
-    // Navigate to profile page when implemented
+    // Navigate to profile page 
+    // navigate('/profile');
+    console.log('Profile clicked - implement profile page');
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setShowUserMenu(false);
   };
 
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header className="header-container">
+      <div className="header-content">
+        <div className="header-main">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="logo-container">
             <button
-              onClick={() => navigate('/')}
-              className="flex items-center space-x-2 text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              onClick={() => handleNavigation('/')}
+              className="logo-button"
+              aria-label="Go to home page"
             >
               <svg 
-                className="w-8 h-8" 
+                className="logo-icon" 
                 fill="currentColor" 
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
               </svg>
-              <span>MovieApp</span>
+              <span className="logo-text">Movie Application</span>
             </button>
           </div>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="desktop-nav" role="navigation">
             <button
-              onClick={() => navigate('/')}
-              className="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              onClick={() => handleNavigation('/')}
+              className={`nav-button ${location.pathname === '/' ? 'active' : ''}`}
+              aria-current={location.pathname === '/' ? 'page' : undefined}
             >
               Home
             </button>
             <button
-              onClick={() => navigate('/search')}
-              className="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              onClick={() => handleNavigation('/search')}
+              className={`nav-button ${location.pathname === '/search' ? 'active' : ''}`}
+              aria-current={location.pathname === '/search' ? 'page' : undefined}
             >
               Search
             </button>
           </nav>
 
           {/* User Section */}
-          <div className="flex items-center space-x-4">
+          <div className="user-section">
             {user ? (
-              <div className="relative">
+              <div className="user-menu-container" ref={menuRef}>
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
+                  className="user-menu-button"
+                  aria-expanded={showUserMenu}
+                  aria-haspopup="true"
+                  aria-label={`User menu for ${user.displayName || user.email}`}
                 >
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <div className="user-avatar">
                     {user.photoURL ? (
                       <img
                         src={user.photoURL}
-                        alt="Profile"
-                        className="w-8 h-8 rounded-full object-cover"
+                        alt={`${user.displayName || 'User'}'s profile`}
+                        className="user-avatar-img"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
                       />
-                    ) : (
-                      <span className="text-white text-sm font-medium">
-                        {user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}
-                      </span>
-                    )}
+                    ) : null}
+                    <span 
+                      className="user-initial"
+                      style={{ display: user.photoURL ? 'none' : 'flex' }}
+                    >
+                      {user.displayName?.charAt(0) || user.email?.charAt(0) || 'U'}
+                    </span>
                   </div>
-                  <span className="hidden sm:block text-sm font-medium">
+                  <span className="user-name">
                     {user.displayName || 'User'}
                   </span>
                   <svg 
-                    className="w-4 h-4" 
+                    className={`dropdown-arrow ${showUserMenu ? 'open' : ''}`}
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -98,61 +152,89 @@ const Header = () => {
 
                 {/* Dropdown Menu */}
                 {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
-                    <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
-                      {user.email}
+                  <div className="user-dropdown" role="menu">
+                    <div className="user-info">
+                      <div className="user-email">
+                        {user.email}
+                      </div>
+                      {user.displayName && (
+                        <div className="user-display-name">
+                          {user.displayName}
+                        </div>
+                      )}
                     </div>
+                    <div className="dropdown-divider"></div>
                     <button
                       onClick={handleProfile}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                      className="dropdown-item"
+                      role="menuitem"
                     >
+                      <svg 
+                        className="dropdown-item-icon" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
                       Profile Settings
                     </button>
                     <button
                       onClick={handleLogout}
-                      disabled={loading}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-50"
+                      disabled={logoutLoading || loading}
+                      className={`dropdown-item logout-item ${(logoutLoading || loading) ? 'loading-button' : ''}`}
+                      role="menuitem"
                     >
-                      {loading ? 'Signing out...' : 'Sign Out'}
+                      <svg 
+                        className="dropdown-item-icon" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      {logoutLoading ? 'Signing out...' : 'Sign Out'}
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="small"
+              <div className="auth-buttons">
+                <button
+                  className={`sign-in-button ${loading ? 'loading-button' : ''}`}
                   onClick={handleLogin}
                   disabled={loading}
                 >
                   Sign In
-                </Button>
-                <Button
-                  variant="primary"
-                  size="small"
+                </button>
+                <button
+                  className={`get-started-button ${loading ? 'loading-button' : ''}`}
                   onClick={() => navigate('/login')}
                   disabled={loading}
                 >
                   Get Started
-                </Button>
+                </button>
               </div>
             )}
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden">
-          <nav className="flex space-x-4 pb-4">
+        <div className="mobile-nav">
+          <nav className="mobile-nav-content" role="navigation">
             <button
-              onClick={() => navigate('/')}
-              className="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              onClick={() => handleNavigation('/')}
+              className={`mobile-nav-button ${location.pathname === '/' ? 'active' : ''}`}
+              aria-current={location.pathname === '/' ? 'page' : undefined}
             >
               Home
             </button>
             <button
-              onClick={() => navigate('/search')}
-              className="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+              onClick={() => handleNavigation('/search')}
+              className={`mobile-nav-button ${location.pathname === '/search' ? 'active' : ''}`}
+              aria-current={location.pathname === '/search' ? 'page' : undefined}
             >
               Search
             </button>
@@ -163,8 +245,9 @@ const Header = () => {
       {/* Overlay to close dropdown */}
       {showUserMenu && (
         <div
-          className="fixed inset-0 z-40"
+          className="dropdown-overlay"
           onClick={() => setShowUserMenu(false)}
+          aria-hidden="true"
         />
       )}
     </header>
