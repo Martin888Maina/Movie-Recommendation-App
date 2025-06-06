@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useMovies } from '../context/MovieContext';
-import { cachedMovieApi } from '../services/Api';
+import { cachedMovieApi } from '../services/api';
 import MovieList from '../pages/MovieList';
 import '../styles/Home.css';
 

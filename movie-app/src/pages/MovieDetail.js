@@ -1,7 +1,7 @@
 // pages/MovieDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { movieApi } from '../services/Api';
+import { movieApi } from '../services/api';
 import '../styles/MovieDetail.css';
 
 const MovieDetail = () => {

@@ -1,6 +1,6 @@
 // src/context/MovieContext.js
 import React, { createContext, useContext, useReducer } from 'react';
-import { cachedMovieApi, movieApi } from '../services/Api';
+import { cachedMovieApi, movieApi } from '../services/api';
 
 const MovieContext = createContext();
 

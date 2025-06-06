@@ -1,6 +1,6 @@
 // components/SearchBar.js
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { movieApi } from '../../services/Api';
+import { movieApi } from '../../services/api';
 import '../../styles/SearchBar.css';
 
 const SearchBar = ({ 

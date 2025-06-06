@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { imageUtils } from '../services/Api';
+import { imageUtils } from '../services/api';
 import '../styles/MovieCard.css';
 
 

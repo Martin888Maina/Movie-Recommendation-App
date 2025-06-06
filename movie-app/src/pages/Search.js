@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import SearchBar from '../components/movies/SearchBar';
 import MovieCard from '../pages/MovieCard';
-import { movieApi } from '../services/Api';
+import { movieApi } from '../services/api';
 import '../styles/Search.css';
 
 const Search = () => {

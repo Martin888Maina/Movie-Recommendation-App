@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { auth } from '../services/Auth';
+import { auth } from '../services/auth';
 import { confirmPasswordReset } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import '../styles/ResetPassword.css';
