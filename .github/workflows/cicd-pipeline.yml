@@ -1,0 +1,99 @@
+name: CI/CD Pipeline for Movie App
+
+on:
+  push:
+    branches: [ production, development ]
+  pull_request:
+    branches: [ production ]
+
+jobs:
+  # Job 1: Lint and Build
+  lint-and-build:
+    runs-on: ubuntu-latest
+    name: Lint and Build Application
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: './movie-app/package-lock.json'
+    
+    - name: Install dependencies
+      working-directory: ./movie-app
+      run: npm ci
+    
+    - name: Run ESLint (Linting Check)
+      working-directory: ./movie-app
+      run: npm run lint
+      continue-on-error: false
+    
+    - name: Check code formatting
+      working-directory: ./movie-app
+      run: npm run format:check
+      continue-on-error: false
+    
+    - name: Build application
+      working-directory: ./movie-app
+      run: npm run build
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files
+        path: movie-app/build/
+        retention-days: 1
+
+  # Job 2: Deploy to Firebase (only on production branch)
+  deploy:
+    needs: lint-and-build
+    runs-on: ubuntu-latest
+    name: Deploy to Firebase Hosting
+    if: github.ref == 'refs/heads/production' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-files
+        path: movie-app/build/
+    
+    - name: Deploy to Firebase Hosting
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+        projectId: 'my-modern-movie-app'
+        channelId: live
+
+  # Job 3: Preview Deploy (for pull requests)
+  preview-deploy:
+    needs: lint-and-build
+    runs-on: ubuntu-latest
+    name: Deploy Preview
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-files
+        path: movie-app/build/
+    
+    - name: Deploy to Firebase Hosting Preview
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+        projectId: 'my-modern-movie-app'
+        channelId: preview
