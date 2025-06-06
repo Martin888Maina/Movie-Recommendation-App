@@ -40,7 +40,7 @@ const Header = () => {
         navigate('/', { replace: true });
       } else {
         console.error('Logout failed:', result.error);
-        // Optionally show error message to user
+        // error message to user
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -56,8 +56,7 @@ const Header = () => {
   const handleProfile = () => {
     setShowUserMenu(false);
     // Navigate to profile page 
-    // navigate('/profile');
-    console.log('Profile clicked - implement profile page');
+    navigate('/profile');
   };
 
   const handleNavigation = (path) => {

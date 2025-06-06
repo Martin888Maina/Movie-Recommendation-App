@@ -16,7 +16,7 @@ const Footer = () => {
                   <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
                 </svg>
               </div>
-              <span className="brand-title">MovieApp</span>
+              <span className="brand-title">Movie App</span>
             </div>
             <p className="brand-description">
               Discover and explore thousands of movies with detailed information, 
@@ -25,7 +25,7 @@ const Footer = () => {
             </p>
             <div className="social-links">
               <a 
-                href="https://facebook.com/movieapp" 
+                href="https://www.facebook.com/" 
                 className="social-link"
                 aria-label="Facebook"
               >
@@ -34,7 +34,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a 
-                href="https://twitter.com/movieapp" 
+                href="https://x.com/" 
                 className="social-link"
                 aria-label="Twitter"
               >
@@ -43,7 +43,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a 
-                href="https://instagram.com/movieapp" 
+                href="https://www.instagram.com/accounts/login/?hl=en" 
                 className="social-link"
                 aria-label="Instagram"
               >

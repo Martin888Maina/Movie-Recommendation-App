@@ -5,6 +5,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import MovieDetail from './pages/MovieDetail';
 import Search from './pages/Search';
+import Profile from './pages/Profile';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import ProtectedRoute from '../src/components/auth/ProtectedRoute';
 
 const AppRoutes = () => {
@@ -12,6 +15,8 @@ const AppRoutes = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       
       {/* Public Routes - No authentication required */}
       <Route path="/" element={<Home />} />
@@ -23,6 +28,16 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <MovieDetail />
+          </ProtectedRoute>
+        } 
+      />
+      
+      {/* Profile Route - Protected */}
+      <Route 
+        path="/profile" 
+        element={
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         } 
       />

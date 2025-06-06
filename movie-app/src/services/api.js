@@ -76,7 +76,7 @@ export const movieApi = {
     }
   },
 
-  // Get trending movies (default timeWindow: 'day')
+  // Get trending movies
   getTrendingMovies: async (timeWindow = 'day') => {
     try {
       const response = await api.get(`/trending/movie/${timeWindow}`);
@@ -90,7 +90,7 @@ export const movieApi = {
   getGenres: async () => {
     try {
       const response = await api.get('/genre/movie/list');
-      return response.data.genres; // returns an array of { id, name }
+      return response.data.genres;
     } catch (err) {
       throw new Error('Failed to fetch genres');
     }
@@ -112,16 +112,15 @@ export const movieApi = {
   }
 };
 
-// Utility for building image URLs (fallback to placeholder if path is falsy)
+// Utility for building image URLs
 export const imageUtils = {
-  getImageUrl: (path, size = 'w500') => {
+  getImageUrl: (path) => {
     if (!path) return '/placeholder-movie.jpg';
-    const base = process.env.REACT_APP_TMDB_IMAGE_BASE_URL || 'https://image.tmdb.org/t/p';
-    return `${base}/${size}${path}`;
+    return `${process.env.REACT_APP_TMDB_IMAGE_BASE_URL}${path}`;
   },
-  getPosterUrl: (posterPath) => imageUtils.getImageUrl(posterPath, 'w500'),
-  getBackdropUrl: (backdropPath) => imageUtils.getImageUrl(backdropPath, 'w1280'),
-  getProfileUrl: (profilePath) => imageUtils.getImageUrl(profilePath, 'w185')
+  getPosterUrl: (posterPath) => imageUtils.getImageUrl(posterPath),
+  getBackdropUrl: (backdropPath) => imageUtils.getImageUrl(backdropPath),
+  getProfileUrl: (profilePath) => imageUtils.getImageUrl(profilePath),
 };
 
 // Simple in‐memory cache with TTL

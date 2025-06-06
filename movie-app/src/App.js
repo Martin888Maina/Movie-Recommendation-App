@@ -12,6 +12,11 @@ import { MovieProvider } from './context/MovieContext';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 
+
+//Import ToastContainer and its CSS:
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Routes
 import AppRoutes from './Routes';
 
@@ -25,6 +30,7 @@ function App() {
               <Header />
               <main className="flex-grow-1">
                 <AppRoutes />
+                <ToastContainer />
               </main>
               <Footer />
             </div>

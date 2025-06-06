@@ -204,7 +204,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>MovieApp</h1>
+          <h1>Movie App</h1>
           <h2>{isRegisterMode ? 'Create Account' : 'Welcome Back'}</h2>
           <p>{isRegisterMode ? 'Sign up to discover amazing movies' : 'Sign in to your account'}</p>
           {from !== '/' && (
