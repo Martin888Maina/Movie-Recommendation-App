@@ -1,11 +1,11 @@
 // Home.js
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useMovies } from '../context/MovieContext';
-import { cachedMovieApi } from '../services/api';
-import MovieList from '../pages/MovieList';
-import '../styles/Home.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useMovies } from "../context/MovieContext";
+import { cachedMovieApi } from "../services/api";
+import MovieList from "../pages/MovieList";
+import "../styles/Home.css";
 
 const Home = () => {
   const { user } = useAuth();
@@ -15,11 +15,11 @@ const Home = () => {
     loading: contextLoading,
     error: contextError,
     fetchTrendingMovies,
-    fetchGenres
+    fetchGenres,
   } = useMovies();
 
-  const [activeSection, setActiveSection] = useState('popular');
-  
+  const [activeSection, setActiveSection] = useState("popular");
+
   // Pagination state for popular movies
   const [popularMovies, setPopularMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,15 +31,15 @@ const Home = () => {
   const fetchPopularMovies = async (page = 1) => {
     setPopularLoading(true);
     setPopularError(null);
-    
+
     try {
       const data = await cachedMovieApi.getPopularMovies(page);
       setPopularMovies(data.results || []);
       setTotalPages(data.total_pages || 1);
       setCurrentPage(data.page || 1);
     } catch (err) {
-      setPopularError(err.message || 'Failed to fetch popular movies');
-      console.error('Error fetching popular movies:', err);
+      setPopularError(err.message || "Failed to fetch popular movies");
+      console.error("Error fetching popular movies:", err);
     } finally {
       setPopularLoading(false);
     }
@@ -56,7 +56,7 @@ const Home = () => {
   useEffect(() => {
     // Load initial data
     fetchPopularMovies(1);
-    fetchTrendingMovies('day');
+    fetchTrendingMovies("day");
     fetchGenres();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -67,9 +67,9 @@ const Home = () => {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
   };
 
   // Extract results arrays safely
@@ -77,7 +77,8 @@ const Home = () => {
   const featuredMovie = popularMovies[0];
 
   // Determine loading and error states
-  const isLoading = contextLoading || (popularLoading && popularMovies.length === 0);
+  const isLoading =
+    contextLoading || (popularLoading && popularMovies.length === 0);
   const error = contextError || popularError;
 
   if (isLoading) {
@@ -96,7 +97,10 @@ const Home = () => {
         <div className="error-container">
           <h2>Oops! Something went wrong</h2>
           <p>{error}</p>
-          <button onClick={() => window.location.reload()} className="retry-btn">
+          <button
+            onClick={() => window.location.reload()}
+            className="retry-btn"
+          >
             Try Again
           </button>
         </div>
@@ -112,7 +116,7 @@ const Home = () => {
           <div
             className="hero-backdrop"
             style={{
-              backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/w1280${featuredMovie.backdrop_path})`
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(https://image.tmdb.org/t/p/w1280${featuredMovie.backdrop_path})`,
             }}
           >
             <div className="hero-content">
@@ -132,7 +136,10 @@ const Home = () => {
                   </span>
                 </div>
                 <div className="hero-actions">
-                  <Link to={`/movie/${featuredMovie.id}`} className="btn primary">
+                  <Link
+                    to={`/movie/${featuredMovie.id}`}
+                    className="btn primary"
+                  >
                     Watch Now
                   </Link>
                   <button className="btn secondary">Add to Watchlist</button>
@@ -148,9 +155,11 @@ const Home = () => {
         <div className="container">
           <h2 className="welcome-title">
             {getGreeting()}
-            {user ? `, ${user.displayName || user.email}` : ''}!
+            {user ? `, ${user.displayName || user.email}` : ""}!
           </h2>
-          <p className="welcome-subtitle">Discover amazing movies and TV shows</p>
+          <p className="welcome-subtitle">
+            Discover amazing movies and TV shows
+          </p>
         </div>
       </section>
 
@@ -159,14 +168,14 @@ const Home = () => {
         <div className="container">
           <div className="nav-tabs">
             <button
-              className={`nav-tab ${activeSection === 'popular' ? 'active' : ''}`}
-              onClick={() => handleSectionChange('popular')}
+              className={`nav-tab ${activeSection === "popular" ? "active" : ""}`}
+              onClick={() => handleSectionChange("popular")}
             >
               Popular Movies
             </button>
             <button
-              className={`nav-tab ${activeSection === 'trending' ? 'active' : ''}`}
-              onClick={() => handleSectionChange('trending')}
+              className={`nav-tab ${activeSection === "trending" ? "active" : ""}`}
+              onClick={() => handleSectionChange("trending")}
             >
               Trending Today
             </button>
@@ -179,14 +188,16 @@ const Home = () => {
         <div className="container">
           <div className="section-header">
             <h3 className="section-title">
-              {activeSection === 'popular' ? 'Popular Movies' : 'Trending Today'}
+              {activeSection === "popular"
+                ? "Popular Movies"
+                : "Trending Today"}
             </h3>
             <Link to="/search" className="see-all-link">
               See All
             </Link>
           </div>
 
-          {activeSection === 'popular' ? (
+          {activeSection === "popular" ? (
             <MovieList
               movies={popularMovies}
               loading={popularLoading}

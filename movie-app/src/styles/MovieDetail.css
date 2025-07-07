@@ -1,5 +1,5 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
 
 /* CSS Variables */
 :root {
@@ -22,7 +22,11 @@
 
 /* Global Styles */
 .movie-detail-container {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background: var(--background-dark);
   min-height: 100vh;
   color: var(--text-primary);
@@ -39,7 +43,7 @@
 }
 
 .hero-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -80,7 +84,7 @@
 
 /* Typography Enhancements */
 .movie-title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4rem);
   line-height: 1.1;
@@ -195,7 +199,7 @@
 }
 
 .section-title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 600;
   font-size: 1.5rem;
   margin-bottom: 1rem;
@@ -204,7 +208,7 @@
 }
 
 .section-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -265,7 +269,11 @@
 }
 
 .company-badge {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   padding: 0.5rem 1rem;
@@ -301,8 +309,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error-container {
@@ -326,25 +338,25 @@
     min-height: 50vh !important;
     background-attachment: scroll;
   }
-  
+
   .movie-title {
     font-size: 2rem;
   }
-  
+
   .content-section {
     padding: 1.5rem;
   }
-  
+
   .details-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .hero-section .row {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .hero-section .col-md-4 {
     margin-bottom: 2rem;
   }
@@ -354,11 +366,11 @@
   .hero-section {
     min-height: 40vh !important;
   }
-  
+
   .movie-title {
     font-size: 1.75rem;
   }
-  
+
   .content-section {
     padding: 1rem;
   }

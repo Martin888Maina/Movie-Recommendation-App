@@ -1,14 +1,14 @@
 // components/SearchBar.js
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { movieApi } from '../../services/api';
-import '../../styles/SearchBar.css';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { movieApi } from "../../services/api";
+import "../../styles/SearchBar.css";
 
-const SearchBar = ({ 
-  onMovieSelect, 
-  onSearchClear, 
-  placeholder = "Search movies..." 
+const SearchBar = ({
+  onMovieSelect,
+  onSearchClear,
+  placeholder = "Search movies...",
 }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -30,19 +30,19 @@ const SearchBar = ({
 
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const response = await movieApi.searchMovies(searchQuery, 1);
       const filteredResults = response.results
-        .filter(movie => movie.poster_path) // Only show movies with posters
+        .filter((movie) => movie.poster_path) // Only show movies with posters
         .slice(0, 8); // Limit to 8 suggestions
-      
+
       setSuggestions(filteredResults);
       setShowSuggestions(true);
       setSelectedIndex(-1);
     } catch (err) {
-      console.error('Search error:', err);
-      setError('Failed to search movies. Please try again.');
+      console.error("Search error:", err);
+      setError("Failed to search movies. Please try again.");
       setSuggestions([]);
     } finally {
       setIsLoading(false);
@@ -60,7 +60,7 @@ const SearchBar = ({
     }
 
     // Clear selection when user starts typing again
-    if (value.trim() === '') {
+    if (value.trim() === "") {
       onSearchClear();
       setSuggestions([]);
       setShowSuggestions(false);
@@ -87,25 +87,25 @@ const SearchBar = ({
     if (!showSuggestions || suggestions.length === 0) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
-        setSelectedIndex(prev => 
-          prev < suggestions.length - 1 ? prev + 1 : 0
+        setSelectedIndex((prev) =>
+          prev < suggestions.length - 1 ? prev + 1 : 0,
         );
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedIndex(prev => 
-          prev > 0 ? prev - 1 : suggestions.length - 1
+        setSelectedIndex((prev) =>
+          prev > 0 ? prev - 1 : suggestions.length - 1,
         );
         break;
-      case 'Enter':
+      case "Enter":
         e.preventDefault();
         if (selectedIndex >= 0 && suggestions[selectedIndex]) {
           handleSuggestionSelect(suggestions[selectedIndex]);
         }
         break;
-      case 'Escape':
+      case "Escape":
         setShowSuggestions(false);
         setSelectedIndex(-1);
         inputRef.current?.blur();
@@ -119,7 +119,7 @@ const SearchBar = ({
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        suggestionsRef.current && 
+        suggestionsRef.current &&
         !suggestionsRef.current.contains(event.target) &&
         !inputRef.current?.contains(event.target)
       ) {
@@ -128,8 +128,8 @@ const SearchBar = ({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Cleanup debounce on unmount
@@ -143,7 +143,7 @@ const SearchBar = ({
 
   // Clear search
   const handleClear = () => {
-    setQuery('');
+    setQuery("");
     setSuggestions([]);
     setShowSuggestions(false);
     setSelectedIndex(-1);
@@ -154,9 +154,9 @@ const SearchBar = ({
 
   // Get poster URL with fallback
   const getPosterUrl = (posterPath) => {
-    return posterPath 
+    return posterPath
       ? `https://image.tmdb.org/t/p/w92${posterPath}`
-      : '/placeholder-poster.jpg';
+      : "/placeholder-poster.jpg";
   };
 
   return (
@@ -168,7 +168,13 @@ const SearchBar = ({
             {isLoading ? (
               <div className="search-loading-icon"></div>
             ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
               </svg>
@@ -196,7 +202,13 @@ const SearchBar = ({
               type="button"
               aria-label="Clear search"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
@@ -228,7 +240,7 @@ const SearchBar = ({
                 {suggestions.map((movie, index) => (
                   <div
                     key={movie.id}
-                    className={`suggestion-item ${index === selectedIndex ? 'selected' : ''}`}
+                    className={`suggestion-item ${index === selectedIndex ? "selected" : ""}`}
                     onClick={() => handleSuggestionSelect(movie)}
                     onMouseEnter={() => setSelectedIndex(index)}
                   >
@@ -238,19 +250,18 @@ const SearchBar = ({
                         alt={`${movie.title} poster`}
                         loading="lazy"
                         onError={(e) => {
-                          e.target.src = '/placeholder-poster.jpg';
+                          e.target.src = "/placeholder-poster.jpg";
                         }}
                       />
                     </div>
-                    
+
                     <div className="suggestion-info">
                       <h4 className="suggestion-title">{movie.title}</h4>
                       <div className="suggestion-meta">
                         <span className="suggestion-year">
-                          {movie.release_date 
-                            ? new Date(movie.release_date).getFullYear() 
-                            : 'N/A'
-                          }
+                          {movie.release_date
+                            ? new Date(movie.release_date).getFullYear()
+                            : "N/A"}
                         </span>
                         {movie.vote_average > 0 && (
                           <>
@@ -263,17 +274,22 @@ const SearchBar = ({
                       </div>
                       {movie.overview && (
                         <p className="suggestion-overview">
-                          {movie.overview.length > 80 
+                          {movie.overview.length > 80
                             ? `${movie.overview.substring(0, 80)}...`
-                            : movie.overview
-                          }
+                            : movie.overview}
                         </p>
                       )}
                     </div>
 
                     <div className="suggestion-arrow">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="m9 18 6-6-6-6"/>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path d="m9 18 6-6-6-6" />
                       </svg>
                     </div>
                   </div>

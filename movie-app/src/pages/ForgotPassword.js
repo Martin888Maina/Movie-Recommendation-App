@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { toast } from 'react-toastify';
-import '../styles/ForgotPassword.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import "../styles/ForgotPassword.css";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { resetPassword } = useAuth();
   const navigate = useNavigate();
@@ -17,20 +17,20 @@ const ForgotPassword = () => {
     try {
       const result = await resetPassword(email);
       if (result.success) {
-        toast.success('Reset link sent! Check your email.', {
-          position: 'top-right',
+        toast.success("Reset link sent! Check your email.", {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
         });
-        setEmail('');
+        setEmail("");
         // navigate back to login after a short delay
-        setTimeout(() => navigate('/login', { replace: true }), 2000);
+        setTimeout(() => navigate("/login", { replace: true }), 2000);
       } else {
         toast.error(result.error, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -39,8 +39,8 @@ const ForgotPassword = () => {
         });
       }
     } catch (err) {
-      toast.error('Failed to send reset link. Please try again.', {
-        position: 'top-right',
+      toast.error("Failed to send reset link. Please try again.", {
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -77,13 +77,13 @@ const ForgotPassword = () => {
             className="btn primary-btn"
             disabled={isLoading || !email.trim()}
           >
-            {isLoading ? 'Sending...' : 'Send Reset Link'}
+            {isLoading ? "Sending..." : "Send Reset Link"}
           </button>
 
           <button
             type="button"
             className="btn secondary-btn"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
             disabled={isLoading}
           >
             Back to Login

@@ -9,7 +9,11 @@
   --text-secondary: #b3b3b3;
   --text-muted: #8c8c8c;
   --border-color: #333333;
-  --gradient-overlay: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(0, 0, 0, 0.8));
+  --gradient-overlay: linear-gradient(
+    135deg,
+    rgba(229, 9, 20, 0.1),
+    rgba(0, 0, 0, 0.8)
+  );
   --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.15);
   --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.25);
   --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -22,7 +26,13 @@
   min-height: 100vh;
   background: var(--background-dark);
   color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 /* Loading States */
@@ -44,7 +54,7 @@
 }
 
 .loader::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -58,7 +68,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .error-container h2 {
@@ -112,7 +124,7 @@
 }
 
 .hero-backdrop::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -192,13 +204,18 @@
 }
 
 .btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -234,7 +251,11 @@
 /* Welcome Section */
 .welcome-section {
   padding: 3rem 0;
-  background: linear-gradient(135deg, var(--background-light), var(--background-dark));
+  background: linear-gradient(
+    135deg,
+    var(--background-light),
+    var(--background-dark)
+  );
 }
 
 .container {
@@ -299,7 +320,7 @@
 }
 
 .nav-tab.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -364,7 +385,11 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: linear-gradient(135deg, var(--secondary-color), var(--background-dark));
+  background: linear-gradient(
+    135deg,
+    var(--secondary-color),
+    var(--background-dark)
+  );
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   text-decoration: none;
@@ -375,7 +400,7 @@
 }
 
 .genre-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -420,7 +445,11 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: linear-gradient(135deg, var(--background-light), var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--background-light),
+    var(--secondary-color)
+  );
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   text-decoration: none;
@@ -432,7 +461,7 @@
 }
 
 .action-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -480,40 +509,40 @@
   .hero-content {
     padding: 0 1rem;
   }
-  
+
   .container {
     padding: 0 1rem;
   }
-  
+
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .btn {
     justify-content: center;
   }
-  
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .genres-grid {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
-  
+
   .actions-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .nav-tabs {
     justify-content: flex-start;
     overflow-x: auto;
     padding-bottom: 0.5rem;
   }
-  
+
   .nav-tab {
     white-space: nowrap;
     flex-shrink: 0;
@@ -525,21 +554,21 @@
     height: 50vh;
     min-height: 400px;
   }
-  
+
   .hero-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .welcome-section {
     padding: 2rem 0;
   }
-  
+
   .section-nav {
     padding: 1rem 0;
   }
-  
+
   .movies-section,
   .genres-section,
   .quick-actions {

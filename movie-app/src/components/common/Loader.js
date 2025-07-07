@@ -1,23 +1,20 @@
 // Loader.js
-import React from 'react';
-import '../../styles/Loader.css';
+import React from "react";
+import "../../styles/Loader.css";
 
-const Loader = ({ 
-  size = 'medium', 
-  color = '#3b82f6', 
-  text = '', 
-  className = '',
-  fullScreen = false 
+const Loader = ({
+  size = "medium",
+  color = "#3b82f6",
+  text = "",
+  className = "",
+  fullScreen = false,
 }) => {
-  const containerClass = fullScreen ? 'loader-fullscreen' : 'loader-container';
+  const containerClass = fullScreen ? "loader-fullscreen" : "loader-container";
 
   return (
     <div className={`${containerClass} ${className}`}>
       <div className="loader-content">
-        <div
-          className={`spinner ${size}`}
-          style={{ borderTopColor: color }}
-        />
+        <div className={`spinner ${size}`} style={{ borderTopColor: color }} />
         {text && <p className="loader-text">{text}</p>}
       </div>
     </div>
@@ -59,7 +56,7 @@ export const MovieDetailSkeleton = () => {
   );
 };
 
-export const PageLoader = ({ text = 'Loading...' }) => {
+export const PageLoader = ({ text = "Loading..." }) => {
   return (
     <div className="page-loader">
       <Loader size="large" text={text} />

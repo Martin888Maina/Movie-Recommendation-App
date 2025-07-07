@@ -1,5 +1,5 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
 
 /* CSS Variables*/
 :root {
@@ -27,7 +27,11 @@
 
 /* Main Container */
 .movie-list-container {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   background: var(--background-dark);
   min-height: 100vh;
   padding: 2rem 0;
@@ -59,7 +63,7 @@
 }
 
 .movie-list-title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
   margin: 0;
@@ -71,7 +75,7 @@
 }
 
 .movie-list-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -8px;
   left: 0;
@@ -209,7 +213,7 @@
 }
 
 .movie-list-error h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.75rem;
   color: var(--accent-color);
   margin-bottom: 1rem;
@@ -271,7 +275,7 @@
 }
 
 .movie-list-empty h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.75rem;
   color: var(--gold-accent);
   margin-bottom: 1rem;
@@ -328,7 +332,11 @@
   gap: 2rem;
   padding: 3rem 1rem 2rem;
   margin-top: 3rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   border-radius: var(--border-radius);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -529,7 +537,7 @@
     display: flex;
   }
 
-  .pagination-controls .pagination-btn:nth-child(n+3):nth-child(-n+7) {
+  .pagination-controls .pagination-btn:nth-child(n + 3):nth-child(-n + 7) {
     display: flex;
   }
 }
@@ -610,7 +618,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .view-btn:hover,
   .pagination-btn:hover,
   .load-more-btn:hover,
@@ -618,4 +626,3 @@
     transform: none;
   }
 }
-

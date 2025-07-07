@@ -1,13 +1,13 @@
 // context/AuthContext.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { authService } from '../services/auth';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { authService } from "../services/auth";
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -30,15 +30,15 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
-    
+
     const result = await authService.login(email, password);
-    
+
     if (result.success) {
       setUser(result.user);
     } else {
       setError(result.error);
     }
-    
+
     setLoading(false);
     return result;
   };
@@ -46,14 +46,14 @@ export const AuthProvider = ({ children }) => {
   const register = async (email, password, displayName) => {
     setLoading(true);
     setError(null);
-    
+
     const result = await authService.register(email, password, displayName);
-    
+
     // Prevents automatic login after registration
     if (!result.success) {
       setError(result.error);
     }
-    
+
     setLoading(false);
     return result;
   };
@@ -61,15 +61,15 @@ export const AuthProvider = ({ children }) => {
   const loginWithGoogle = async () => {
     setLoading(true);
     setError(null);
-    
+
     const result = await authService.loginWithGoogle();
-    
+
     if (result.success) {
       setUser(result.user);
     } else {
       setError(result.error);
     }
-    
+
     setLoading(false);
     return result;
   };
@@ -77,11 +77,11 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setLoading(true);
     const result = await authService.logout();
-    
+
     if (result.success) {
       setUser(null);
     }
-    
+
     setLoading(false);
     return result;
   };
@@ -94,15 +94,15 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async (updates) => {
     setLoading(true);
     setError(null);
-    
+
     const result = await authService.updateUserProfile(updates);
-    
+
     if (result.success) {
       setUser(result.user);
     } else {
       setError(result.error);
     }
-    
+
     setLoading(false);
     return result;
   };
@@ -122,12 +122,8 @@ export const AuthProvider = ({ children }) => {
     resetPassword,
     updateProfile,
     clearError,
-    isAuthenticated: !!user
+    isAuthenticated: !!user,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

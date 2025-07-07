@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Profile.css';
+import React, { useState, useRef } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import "../styles/Profile.css";
 
 const Profile = () => {
   const { user, updateProfile, loading } = useAuth();
@@ -10,52 +10,52 @@ const Profile = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    displayName: user?.displayName || '',
-    email: user?.email || '',
-    photoURL: user?.photoURL || ''
+    displayName: user?.displayName || "",
+    email: user?.email || "",
+    photoURL: user?.photoURL || "",
   });
   const [previewImage, setPreviewImage] = useState(null);
   const [updateLoading, setUpdateLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Redirect if not authenticated
   if (!user) {
-    navigate('/login');
+    navigate("/login");
     return null;
   }
 
   // Function to truncate email with ellipsis
   const truncateEmail = (email, maxLength = 20) => {
-    if (!email) return '';
+    if (!email) return "";
     if (email.length <= maxLength) return email;
-    
+
     // Find the @ symbol position
-    const atIndex = email.indexOf('@');
+    const atIndex = email.indexOf("@");
     if (atIndex === -1) return email;
-    
+
     // If the part before @ is too long, truncate it
     const localPart = email.slice(0, atIndex);
     const domainPart = email.slice(atIndex);
-    
+
     if (localPart.length > maxLength - 3) {
-      return localPart.slice(0, maxLength - 3) + '...';
+      return localPart.slice(0, maxLength - 3) + "...";
     }
-    
+
     // If total length is too long, truncate domain part
     if (email.length > maxLength) {
       const availableSpace = maxLength - localPart.length - 3;
-      return localPart + domainPart.slice(0, availableSpace) + '...';
+      return localPart + domainPart.slice(0, availableSpace) + "...";
     }
-    
+
     return email;
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -63,14 +63,14 @@ const Profile = () => {
     const file = e.target.files[0];
     if (file) {
       // Validate file type
-      if (!file.type.startsWith('image/')) {
-        setErrorMessage('Please select a valid image file.');
+      if (!file.type.startsWith("image/")) {
+        setErrorMessage("Please select a valid image file.");
         return;
       }
 
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        setErrorMessage('Image size should be less than 5MB.');
+        setErrorMessage("Image size should be less than 5MB.");
         return;
       }
 
@@ -78,9 +78,9 @@ const Profile = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setPreviewImage(e.target.result);
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          photoURL: e.target.result
+          photoURL: e.target.result,
         }));
       };
       reader.readAsDataURL(file);
@@ -89,43 +89,43 @@ const Profile = () => {
 
   const handleRemoveImage = () => {
     setPreviewImage(null);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      photoURL: ''
+      photoURL: "",
     }));
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdateLoading(true);
-    setErrorMessage('');
-    setSuccessMessage('');
+    setErrorMessage("");
+    setSuccessMessage("");
 
     try {
       const updates = {
         displayName: formData.displayName,
-        photoURL: formData.photoURL
+        photoURL: formData.photoURL,
       };
 
       const result = await updateProfile(updates);
 
       if (result.success) {
-        setSuccessMessage('Profile updated successfully!');
+        setSuccessMessage("Profile updated successfully!");
         setIsEditing(false);
         setPreviewImage(null);
-        
+
         // Clear success message after 3 seconds
         setTimeout(() => {
-          setSuccessMessage('');
+          setSuccessMessage("");
         }, 3000);
       } else {
-        setErrorMessage(result.error || 'Failed to update profile.');
+        setErrorMessage(result.error || "Failed to update profile.");
       }
     } catch (error) {
-      setErrorMessage('An error occurred while updating profile.');
+      setErrorMessage("An error occurred while updating profile.");
     } finally {
       setUpdateLoading(false);
     }
@@ -133,14 +133,14 @@ const Profile = () => {
 
   const handleCancel = () => {
     setFormData({
-      displayName: user?.displayName || '',
-      email: user?.email || '',
-      photoURL: user?.photoURL || ''
+      displayName: user?.displayName || "",
+      email: user?.email || "",
+      photoURL: user?.photoURL || "",
     });
     setPreviewImage(null);
     setIsEditing(false);
-    setErrorMessage('');
-    setSuccessMessage('');
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const triggerFileInput = () => {
@@ -152,18 +152,23 @@ const Profile = () => {
       <div className="profile-content">
         {/* Header */}
         <div className="profile-header">
-          <button 
+          <button
             className="back-button"
             onClick={() => navigate(-1)}
             aria-label="Go back"
           >
-            <svg 
-              className="back-icon" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="back-icon"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
           <h1 className="profile-title">Profile Settings</h1>
@@ -172,8 +177,18 @@ const Profile = () => {
         {/* Messages */}
         {successMessage && (
           <div className="message success-message">
-            <svg className="message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            <svg
+              className="message-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
             {successMessage}
           </div>
@@ -181,8 +196,18 @@ const Profile = () => {
 
         {errorMessage && (
           <div className="message error-message">
-            <svg className="message-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="message-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             {errorMessage}
           </div>
@@ -195,7 +220,7 @@ const Profile = () => {
             <div className="avatar-section">
               <div className="avatar-container">
                 <div className="avatar-wrapper">
-                  {(previewImage || formData.photoURL) ? (
+                  {previewImage || formData.photoURL ? (
                     <img
                       src={previewImage || formData.photoURL}
                       alt="Profile"
@@ -203,12 +228,16 @@ const Profile = () => {
                     />
                   ) : (
                     <div className="avatar-placeholder">
-                      <svg className="avatar-icon" fill="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="avatar-icon"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                       </svg>
                     </div>
                   )}
-                  
+
                   {isEditing && (
                     <div className="avatar-overlay">
                       <button
@@ -217,9 +246,24 @@ const Profile = () => {
                         onClick={triggerFileInput}
                         aria-label="Change profile picture"
                       >
-                        <svg className="edit-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg
+                          className="edit-icon"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
                         </svg>
                       </button>
                       {(previewImage || formData.photoURL) && (
@@ -229,15 +273,25 @@ const Profile = () => {
                           onClick={handleRemoveImage}
                           aria-label="Remove profile picture"
                         >
-                          <svg className="remove-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          <svg
+                            className="remove-icon"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
                           </svg>
                         </button>
                       )}
                     </div>
                   )}
                 </div>
-                
+
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -249,8 +303,10 @@ const Profile = () => {
               </div>
 
               <div className="avatar-info">
-                <h2 className="user-name">{user.displayName || 'User'}</h2>
-                <p className="user-email" title={user.email}>{truncateEmail(user.email)}</p>
+                <h2 className="user-name">{user.displayName || "User"}</h2>
+                <p className="user-email" title={user.email}>
+                  {truncateEmail(user.email)}
+                </p>
               </div>
             </div>
 
@@ -298,8 +354,18 @@ const Profile = () => {
                   onClick={() => setIsEditing(true)}
                   disabled={loading}
                 >
-                  <svg className="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  <svg
+                    className="button-icon"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
                   </svg>
                   Edit Profile
                 </button>
@@ -320,16 +386,41 @@ const Profile = () => {
                   >
                     {updateLoading ? (
                       <>
-                        <svg className="loading-spinner" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="loading-spinner"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                         Saving...
                       </>
                     ) : (
                       <>
-                        <svg className="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <svg
+                          className="button-icon"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
                         </svg>
                         Save Changes
                       </>
@@ -347,11 +438,19 @@ const Profile = () => {
           <div className="info-grid">
             <div className="info-item">
               <span className="info-label">Account Created</span>
-              <span className="info-value">{new Date(user.metadata?.creationTime || Date.now()).toLocaleDateString()}</span>
+              <span className="info-value">
+                {new Date(
+                  user.metadata?.creationTime || Date.now(),
+                ).toLocaleDateString()}
+              </span>
             </div>
             <div className="info-item">
               <span className="info-label">Last Sign In</span>
-              <span className="info-value">{new Date(user.metadata?.lastSignInTime || Date.now()).toLocaleDateString()}</span>
+              <span className="info-value">
+                {new Date(
+                  user.metadata?.lastSignInTime || Date.now(),
+                ).toLocaleDateString()}
+              </span>
             </div>
           </div>
         </div>
