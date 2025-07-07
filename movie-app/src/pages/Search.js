@@ -1,9 +1,9 @@
 // pages/Search.js
-import React, { useState, useCallback } from 'react';
-import SearchBar from '../components/movies/SearchBar';
-import MovieCard from '../pages/MovieCard';
-import { movieApi } from '../services/api';
-import '../styles/Search.css';
+import React, { useState, useCallback } from "react";
+import SearchBar from "../components/movies/SearchBar";
+import MovieCard from "../pages/MovieCard";
+import { movieApi } from "../services/api";
+import "../styles/Search.css";
 
 const Search = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -15,20 +15,22 @@ const Search = () => {
     try {
       setIsLoading(true);
       setError(null);
-      
+
       // Fetch detailed movie information
       const detailedMovie = await movieApi.getMovieDetails(movie.id);
       setSelectedMovie(detailedMovie);
-      
+
       // Add to search history (keep only last 5 searches)
-      setSearchHistory(prev => {
-        const newHistory = [movie, ...prev.filter(item => item.id !== movie.id)];
+      setSearchHistory((prev) => {
+        const newHistory = [
+          movie,
+          ...prev.filter((item) => item.id !== movie.id),
+        ];
         return newHistory.slice(0, 5);
       });
-      
     } catch (err) {
-      console.error('Error fetching movie details:', err);
-      setError('Failed to load movie details. Please try again.');
+      console.error("Error fetching movie details:", err);
+      setError("Failed to load movie details. Please try again.");
       setSelectedMovie(movie); // Fallback to basic movie data
     } finally {
       setIsLoading(false);
@@ -40,9 +42,12 @@ const Search = () => {
     setError(null);
   }, []);
 
-  const handleHistorySelect = useCallback((movie) => {
-    handleMovieSelect(movie);
-  }, [handleMovieSelect]);
+  const handleHistorySelect = useCallback(
+    (movie) => {
+      handleMovieSelect(movie);
+    },
+    [handleMovieSelect],
+  );
 
   return (
     <div className="search-page">
@@ -55,14 +60,15 @@ const Search = () => {
               Discover Movies
             </h1>
             <p className="search-subtitle">
-              Find your next favorite movie by searching through thousands of titles
+              Find your next favorite movie by searching through thousands of
+              titles
             </p>
           </div>
         </div>
 
         {/* Search Bar Section */}
         <div className="search-bar-section">
-          <SearchBar 
+          <SearchBar
             onMovieSelect={handleMovieSelect}
             onSearchClear={handleSearchClear}
             placeholder="Search for movies, actors, directors..."
@@ -83,7 +89,11 @@ const Search = () => {
                   <span className="chip-icon">🎬</span>
                   {movie.title}
                   <span className="chip-year">
-                    ({movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A'})
+                    (
+                    {movie.release_date
+                      ? new Date(movie.release_date).getFullYear()
+                      : "N/A"}
+                    )
                   </span>
                 </button>
               ))}
@@ -104,7 +114,7 @@ const Search = () => {
           <div className="search-error">
             <div className="error-icon">⚠️</div>
             <p>{error}</p>
-            <button 
+            <button
               className="retry-button"
               onClick={() => window.location.reload()}
             >
@@ -118,18 +128,24 @@ const Search = () => {
           <div className="selected-movie-section">
             <div className="section-header">
               <h2 className="section-title">Movie Details</h2>
-              <button 
+              <button
                 className="clear-selection-btn"
                 onClick={handleSearchClear}
                 title="Clear selection"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </button>
             </div>
-            
+
             <div className="movie-card-container">
               <MovieCard
                 movie={selectedMovie}
@@ -154,29 +170,36 @@ const Search = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {selectedMovie.runtime && (
                   <div className="info-item">
                     <h4>Runtime</h4>
                     <p>{selectedMovie.runtime} minutes</p>
                   </div>
                 )}
-                
+
                 {selectedMovie.release_date && (
                   <div className="info-item">
                     <h4>Release Date</h4>
-                    <p>{new Date(selectedMovie.release_date).toLocaleDateString()}</p>
+                    <p>
+                      {new Date(
+                        selectedMovie.release_date,
+                      ).toLocaleDateString()}
+                    </p>
                   </div>
                 )}
-                
+
                 {selectedMovie.vote_average && (
                   <div className="info-item">
                     <h4>Rating</h4>
                     <div className="rating-display">
-                      <span className="rating-value">{selectedMovie.vote_average.toFixed(1)}</span>
+                      <span className="rating-value">
+                        {selectedMovie.vote_average.toFixed(1)}
+                      </span>
                       <span className="rating-max">/10</span>
                       <span className="rating-votes">
-                        ({selectedMovie.vote_count?.toLocaleString() || 0} votes)
+                        ({selectedMovie.vote_count?.toLocaleString() || 0}{" "}
+                        votes)
                       </span>
                     </div>
                   </div>
@@ -191,7 +214,10 @@ const Search = () => {
           <div className="search-empty-state">
             <div className="empty-icon">🎭</div>
             <h3>Start Your Movie Journey</h3>
-            <p>Search for any movie to see detailed information, ratings, and more!</p>
+            <p>
+              Search for any movie to see detailed information, ratings, and
+              more!
+            </p>
             <div className="search-tips">
               <h4>Search Tips:</h4>
               <ul>

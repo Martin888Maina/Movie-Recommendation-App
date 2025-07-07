@@ -1,46 +1,46 @@
 // src/services/Api.js
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_TMDB_BASE_URL,
   timeout: 10000,
   params: {
-    api_key: process.env.REACT_APP_TMDB_API_KEY
-  }
+    api_key: process.env.REACT_APP_TMDB_API_KEY,
+  },
 });
 
 // Request interceptor (logs in development)
 api.interceptors.request.use(
   (config) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('API Request:', config.method?.toUpperCase(), config.url);
+    if (process.env.NODE_ENV === "development") {
+      console.log("API Request:", config.method?.toUpperCase(), config.url);
     }
     return config;
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor (logs errors)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('API Error:', error.response?.data || error.message);
+    console.error("API Error:", error.response?.data || error.message);
     return Promise.reject(error);
-  }
+  },
 );
 
 export const movieApi = {
   // Get popular movies with pagination
   getPopularMovies: async (page = 1) => {
     try {
-      const response = await api.get('/movie/popular', {
-        params: { page }
+      const response = await api.get("/movie/popular", {
+        params: { page },
       });
       return response.data;
     } catch (err) {
-      throw new Error('Failed to fetch popular movies');
+      throw new Error("Failed to fetch popular movies");
     }
   },
 
@@ -49,12 +49,12 @@ export const movieApi = {
     try {
       const response = await api.get(`/movie/${movieId}`, {
         params: {
-          append_to_response: 'credits,videos,similar'
-        }
+          append_to_response: "credits,videos,similar",
+        },
       });
       return response.data;
     } catch (err) {
-      throw new Error('Failed to fetch movie details');
+      throw new Error("Failed to fetch movie details");
     }
   },
 
@@ -64,58 +64,58 @@ export const movieApi = {
       if (!query.trim()) {
         return { results: [], total_pages: 0, total_results: 0, page: 1 };
       }
-      const response = await api.get('/search/movie', {
+      const response = await api.get("/search/movie", {
         params: {
           query: query.trim(),
-          page
-        }
+          page,
+        },
       });
       return response.data;
     } catch (err) {
-      throw new Error('Failed to search movies');
+      throw new Error("Failed to search movies");
     }
   },
 
   // Get trending movies
-  getTrendingMovies: async (timeWindow = 'day') => {
+  getTrendingMovies: async (timeWindow = "day") => {
     try {
       const response = await api.get(`/trending/movie/${timeWindow}`);
       return response.data;
     } catch (err) {
-      throw new Error('Failed to fetch trending movies');
+      throw new Error("Failed to fetch trending movies");
     }
   },
 
   // Get movie genres list
   getGenres: async () => {
     try {
-      const response = await api.get('/genre/movie/list');
+      const response = await api.get("/genre/movie/list");
       return response.data.genres;
     } catch (err) {
-      throw new Error('Failed to fetch genres');
+      throw new Error("Failed to fetch genres");
     }
   },
 
   // Get movies by genre ID
   getMoviesByGenre: async (genreId, page = 1) => {
     try {
-      const response = await api.get('/discover/movie', {
+      const response = await api.get("/discover/movie", {
         params: {
           with_genres: genreId,
-          page
-        }
+          page,
+        },
       });
       return response.data;
     } catch (err) {
-      throw new Error('Failed to fetch movies by genre');
+      throw new Error("Failed to fetch movies by genre");
     }
-  }
+  },
 };
 
 // Utility for building image URLs
 export const imageUtils = {
   getImageUrl: (path) => {
-    if (!path) return '/placeholder-movie.jpg';
+    if (!path) return "/placeholder-movie.jpg";
     return `${process.env.REACT_APP_TMDB_IMAGE_BASE_URL}${path}`;
   },
   getPosterUrl: (posterPath) => imageUtils.getImageUrl(posterPath),
@@ -188,7 +188,7 @@ export const cachedMovieApi = {
     const data = await movieApi.searchMovies(query, page);
     apiCache.set(cacheKey, data);
     return data;
-  }
+  },
 };
 
 export default api;

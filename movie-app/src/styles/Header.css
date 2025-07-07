@@ -29,13 +29,18 @@
 }
 
 .header-container::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(102, 126, 234, 0.3),
+    transparent
+  );
 }
 
 .header-container:hover {
@@ -80,7 +85,7 @@
 }
 
 .logo-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -146,7 +151,7 @@
 }
 
 .nav-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -216,13 +221,18 @@
 }
 
 .user-avatar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   transform: rotate(45deg);
   transition: var(--transition-smooth);
   opacity: 0;
@@ -239,8 +249,12 @@
 }
 
 @keyframes avatarShimmer {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 /* User Avatar Image */
@@ -327,7 +341,7 @@
 }
 
 .dropdown-item::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -374,7 +388,7 @@
 }
 
 .sign-in-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -412,7 +426,7 @@
 }
 
 .get-started-button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -475,8 +489,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Loading States */
@@ -487,7 +505,7 @@
 }
 
 .loading-button::after {
-  content: '';
+  content: "";
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -499,7 +517,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive Design */
@@ -507,39 +527,39 @@
   .header-main {
     height: 56px;
   }
-  
+
   .desktop-nav {
     display: none;
   }
-  
+
   .mobile-nav {
     display: block;
   }
-  
+
   .logo-button {
     font-size: 24px;
     gap: 8px;
   }
-  
+
   .logo-icon {
     width: 28px;
     height: 28px;
   }
-  
+
   .user-avatar {
     width: 32px;
     height: 32px;
   }
-  
+
   .user-avatar-img {
     width: 32px;
     height: 32px;
   }
-  
+
   .user-name {
     display: none;
   }
-  
+
   .user-dropdown {
     right: 0;
     left: 16px;
@@ -551,17 +571,17 @@
   .header-content {
     padding: 0 12px;
   }
-  
+
   .auth-buttons {
     gap: 4px;
   }
-  
+
   .sign-in-button,
   .get-started-button {
     padding: 6px 12px;
     font-size: 13px;
   }
-  
+
   .logo-button {
     font-size: 20px;
   }
@@ -584,14 +604,14 @@
     background: white;
     border-bottom: 2px solid black;
   }
-  
+
   .logo-button,
   .nav-button,
   .user-menu-button {
     color: black;
     border: 1px solid black;
   }
-  
+
   .user-dropdown {
     background: white;
     border: 2px solid black;
@@ -664,7 +684,7 @@
 }
 
 .dropdown-item::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -726,7 +746,7 @@
 }
 
 .loading-button::after {
-  content: '';
+  content: "";
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -805,16 +825,16 @@
     min-width: auto;
     max-width: calc(100vw - 32px);
   }
-  
+
   .user-info {
     padding: 8px 16px;
   }
-  
+
   .dropdown-item {
     padding: 10px 16px;
     font-size: 13px;
   }
-  
+
   .dropdown-item:hover {
     padding-left: 24px;
   }
@@ -864,12 +884,12 @@
   .logout-item {
     border-top: 2px solid black;
   }
-  
+
   .user-dropdown {
     background: white;
     border: 2px solid black;
   }
-  
+
   .dropdown-item:hover {
     background: black;
     color: white;

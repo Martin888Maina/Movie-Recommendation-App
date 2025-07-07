@@ -1,28 +1,28 @@
 // src/context/MovieContext.js
-import React, { createContext, useContext, useReducer } from 'react';
-import { cachedMovieApi, movieApi } from '../services/api';
+import React, { createContext, useContext, useReducer } from "react";
+import { cachedMovieApi, movieApi } from "../services/api";
 
 const MovieContext = createContext();
 
 export const useMovies = () => {
   const context = useContext(MovieContext);
   if (!context) {
-    throw new Error('useMovies must be used within a MovieProvider');
+    throw new Error("useMovies must be used within a MovieProvider");
   }
   return context;
 };
 
 // Action types
 const MOVIE_ACTIONS = {
-  SET_LOADING: 'SET_LOADING',
-  SET_ERROR: 'SET_ERROR',
-  SET_POPULAR_MOVIES: 'SET_POPULAR_MOVIES',
-  SET_TRENDING_MOVIES: 'SET_TRENDING_MOVIES',
-  SET_SEARCH_RESULTS: 'SET_SEARCH_RESULTS',
-  SET_MOVIE_DETAILS: 'SET_MOVIE_DETAILS',
-  SET_GENRES: 'SET_GENRES',
-  CLEAR_SEARCH: 'CLEAR_SEARCH',
-  APPEND_MOVIES: 'APPEND_MOVIES'
+  SET_LOADING: "SET_LOADING",
+  SET_ERROR: "SET_ERROR",
+  SET_POPULAR_MOVIES: "SET_POPULAR_MOVIES",
+  SET_TRENDING_MOVIES: "SET_TRENDING_MOVIES",
+  SET_SEARCH_RESULTS: "SET_SEARCH_RESULTS",
+  SET_MOVIE_DETAILS: "SET_MOVIE_DETAILS",
+  SET_GENRES: "SET_GENRES",
+  CLEAR_SEARCH: "CLEAR_SEARCH",
+  APPEND_MOVIES: "APPEND_MOVIES",
 };
 
 // Initial state
@@ -31,24 +31,24 @@ const initialState = {
     results: [],
     total_pages: 0,
     total_results: 0,
-    page: 1
+    page: 1,
   },
   trendingMovies: {
     results: [],
     total_pages: 0,
-    total_results: 0
+    total_results: 0,
   },
   searchResults: {
     results: [],
     total_pages: 0,
     total_results: 0,
-    query: '',
-    page: 1
+    query: "",
+    page: 1,
   },
   movieDetails: null,
   genres: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 // Reducer
@@ -65,7 +65,7 @@ const movieReducer = (state, action) => {
         ...state,
         popularMovies: action.payload,
         loading: false,
-        error: null
+        error: null,
       };
 
     case MOVIE_ACTIONS.APPEND_MOVIES:
@@ -73,13 +73,10 @@ const movieReducer = (state, action) => {
         ...state,
         popularMovies: {
           ...action.payload,
-          results: [
-            ...state.popularMovies.results,
-            ...action.payload.results
-          ]
+          results: [...state.popularMovies.results, ...action.payload.results],
         },
         loading: false,
-        error: null
+        error: null,
       };
 
     case MOVIE_ACTIONS.SET_TRENDING_MOVIES:
@@ -87,7 +84,7 @@ const movieReducer = (state, action) => {
         ...state,
         trendingMovies: action.payload,
         loading: false,
-        error: null
+        error: null,
       };
 
     case MOVIE_ACTIONS.SET_SEARCH_RESULTS:
@@ -95,10 +92,10 @@ const movieReducer = (state, action) => {
         ...state,
         searchResults: {
           ...action.payload,
-          query: action.query
+          query: action.query,
         },
         loading: false,
-        error: null
+        error: null,
       };
 
     case MOVIE_ACTIONS.SET_MOVIE_DETAILS:
@@ -106,7 +103,7 @@ const movieReducer = (state, action) => {
         ...state,
         movieDetails: action.payload,
         loading: false,
-        error: null
+        error: null,
       };
 
     case MOVIE_ACTIONS.SET_GENRES:
@@ -114,7 +111,7 @@ const movieReducer = (state, action) => {
         ...state,
         genres: action.payload,
         loading: false,
-        error: null
+        error: null,
       };
 
     case MOVIE_ACTIONS.CLEAR_SEARCH:
@@ -124,9 +121,9 @@ const movieReducer = (state, action) => {
           results: [],
           total_pages: 0,
           total_results: 0,
-          query: '',
-          page: 1
-        }
+          query: "",
+          page: 1,
+        },
       };
 
     default:
@@ -153,7 +150,7 @@ export const MovieProvider = ({ children }) => {
   };
 
   // Fetch trending movies
-  const fetchTrendingMovies = async (timeWindow = 'day') => {
+  const fetchTrendingMovies = async (timeWindow = "day") => {
     dispatch({ type: MOVIE_ACTIONS.SET_LOADING, payload: true });
     try {
       const data = await movieApi.getTrendingMovies(timeWindow);
@@ -175,7 +172,7 @@ export const MovieProvider = ({ children }) => {
       dispatch({
         type: MOVIE_ACTIONS.SET_SEARCH_RESULTS,
         payload: data,
-        query: query.trim()
+        query: query.trim(),
       });
     } catch (err) {
       dispatch({ type: MOVIE_ACTIONS.SET_ERROR, payload: err.message });
@@ -228,12 +225,10 @@ export const MovieProvider = ({ children }) => {
     fetchMovieDetails,
     fetchGenres,
     clearSearch,
-    clearError
+    clearError,
   };
 
   return (
-    <MovieContext.Provider value={value}>
-      {children}
-    </MovieContext.Provider>
+    <MovieContext.Provider value={value}>{children}</MovieContext.Provider>
   );
 };
