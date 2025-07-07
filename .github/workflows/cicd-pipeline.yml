@@ -40,6 +40,10 @@ jobs:
     - name: Build application
       working-directory: ./movie-app
       run: npm run build
+      env:
+        REACT_APP_TMDB_API_KEY: ${{ secrets.REACT_APP_TMDB_API_KEY }}
+        REACT_APP_TMDB_BASE_URL: ${{ secrets.REACT_APP_TMDB_BASE_URL }}
+        REACT_APP_TMDB_IMAGE_BASE_URL: ${{ secrets.REACT_APP_TMDB_IMAGE_BASE_URL }}
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
