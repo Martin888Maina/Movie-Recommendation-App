@@ -107,48 +107,39 @@ const ContactUs = () => {
 
             <div className="contact-info-list">
               <div className="contact-info-item">
-                <span className="contact-info-icon">✉</span>
-                <div>
-                  <strong style={{ color: "#e2e8f0" }}>Email Support</strong>
-                  <br />
-                  support@movieapp.example
+                <span className="contact-info-icon">✉️</span>
+                <div className="contact-info-text">
+                  <span className="contact-info-label">Email Support</span>
+                  <span className="contact-info-value">support@movieapp.example</span>
                 </div>
               </div>
               <div className="contact-info-item">
                 <span className="contact-info-icon">🕐</span>
-                <div>
-                  <strong style={{ color: "#e2e8f0" }}>Response Time</strong>
-                  <br />
-                  1–2 business days
+                <div className="contact-info-text">
+                  <span className="contact-info-label">Response Time</span>
+                  <span className="contact-info-value">1–2 business days</span>
                 </div>
               </div>
               <div className="contact-info-item">
                 <span className="contact-info-icon">💬</span>
-                <div>
-                  <strong style={{ color: "#e2e8f0" }}>Community</strong>
-                  <br />
-                  Follow us on social media for updates and announcements.
+                <div className="contact-info-text">
+                  <span className="contact-info-label">Community</span>
+                  <span className="contact-info-value">Follow us on social media for updates and announcements.</span>
                 </div>
               </div>
             </div>
 
             <div style={{ marginTop: "1.5rem" }}>
               <h3>Helpful Links</h3>
-              <ul>
+              <ul className="helpful-links-list">
                 <li>
-                  <Link to="/help" style={{ color: "#9ca3af", textDecoration: "none" }}>
-                    Help Center — Browse FAQs
-                  </Link>
+                  <Link to="/help">Help Center — Browse FAQs</Link>
                 </li>
                 <li>
-                  <Link to="/privacy" style={{ color: "#9ca3af", textDecoration: "none" }}>
-                    Privacy Policy
-                  </Link>
+                  <Link to="/privacy">Privacy Policy</Link>
                 </li>
                 <li>
-                  <Link to="/terms" style={{ color: "#9ca3af", textDecoration: "none" }}>
-                    Terms of Service
-                  </Link>
+                  <Link to="/terms">Terms of Service</Link>
                 </li>
               </ul>
             </div>
