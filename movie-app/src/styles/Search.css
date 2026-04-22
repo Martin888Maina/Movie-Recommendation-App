@@ -1,7 +1,7 @@
 /* Search.css */
 .search-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #141414 100%);
   padding: 0;
   position: relative;
   overflow-x: hidden;
@@ -17,17 +17,17 @@
   background:
     radial-gradient(
       circle at 20% 20%,
-      rgba(120, 119, 198, 0.3) 0%,
+      rgba(255, 255, 255, 0.02) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 80%,
-      rgba(255, 119, 198, 0.2) 0%,
+      rgba(255, 255, 255, 0.02) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 40% 70%,
-      rgba(88, 166, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.02) 0%,
       transparent 50%
     );
   pointer-events: none;
@@ -56,7 +56,7 @@
 .search-title {
   font-size: 3.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #fff 0%, #e0e7ff 50%, #c7d2fe 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -70,7 +70,7 @@
 
 .search-icon {
   font-size: 3rem;
-  filter: drop-shadow(0 0 20px rgba(120, 119, 198, 0.6));
+  filter: drop-shadow(0 0 20px rgba(156, 163, 175, 0.5));
   animation: float 3s ease-in-out infinite;
 }
 
@@ -177,9 +177,9 @@
 
 .history-chip:hover {
   background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(120, 119, 198, 0.5);
+  border-color: rgba(156, 163, 175, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(120, 119, 198, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .chip-icon {
@@ -204,8 +204,8 @@
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 3px solid rgba(120, 119, 198, 0.3);
-  border-top: 3px solid #7877c6;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-top: 3px solid #9ca3af;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -355,7 +355,7 @@
 
 .info-item h4::before {
   content: "▶";
-  color: #7877c6;
+  color: #9ca3af;
   font-size: 0.875rem;
 }
 
@@ -372,19 +372,19 @@
 }
 
 .genre-tag {
-  background: linear-gradient(135deg, #7877c6 0%, #5b59b6 100%);
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 25px;
   font-size: 0.875rem;
   font-weight: 500;
-  box-shadow: 0 2px 10px rgba(120, 119, 198, 0.3);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 
 .genre-tag:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(120, 119, 198, 0.4);
+  box-shadow: 0 4px 15px rgba(156, 163, 175, 0.3);
 }
 
 .rating-display {
@@ -420,7 +420,7 @@
 .empty-icon {
   font-size: 5rem;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 0 20px rgba(120, 119, 198, 0.4));
+  filter: drop-shadow(0 0 20px rgba(156, 163, 175, 0.3));
   animation: bounce 2s infinite;
 }
 

@@ -28,18 +28,18 @@
 }
 
 .search-input-container:hover {
-  border-color: rgba(120, 119, 198, 0.4);
+  border-color: rgba(156, 163, 175, 0.3);
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(120, 119, 198, 0.3),
+    0 0 0 1px rgba(156, 163, 175, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .search-input-container:focus-within {
-  border-color: rgba(120, 119, 198, 0.6);
+  border-color: rgba(156, 163, 175, 0.5);
   box-shadow:
     0 16px 50px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(120, 119, 198, 0.2),
+    0 0 0 3px rgba(156, 163, 175, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
@@ -56,14 +56,14 @@
 }
 
 .search-input-container:focus-within .search-icon {
-  color: #7877c6;
+  color: #9ca3af;
 }
 
 .search-loading-icon {
   width: 20px;
   height: 20px;
-  border: 2px solid rgba(120, 119, 198, 0.3);
-  border-top: 2px solid #7877c6;
+  border: 2px solid rgba(156, 163, 175, 0.25);
+  border-top: 2px solid #9ca3af;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -214,12 +214,12 @@
 }
 
 .suggestions-list::-webkit-scrollbar-thumb {
-  background: rgba(120, 119, 198, 0.5);
+  background: rgba(156, 163, 175, 0.4);
   border-radius: 3px;
 }
 
 .suggestions-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 119, 198, 0.7);
+  background: rgba(156, 163, 175, 0.6);
 }
 
 /* Suggestion Item */
@@ -245,7 +245,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(120, 119, 198, 0.1),
+    rgba(156, 163, 175, 0.08),
     transparent
   );
   transition: left 0.5s;
@@ -257,8 +257,8 @@
 
 .suggestion-item:hover,
 .suggestion-item.selected {
-  background: rgba(120, 119, 198, 0.1);
-  border-left: 3px solid #7877c6;
+  background: rgba(156, 163, 175, 0.08);
+  border-left: 3px solid #9ca3af;
 }
 
 .suggestion-item:last-child {
@@ -353,7 +353,7 @@
 .suggestion-item.selected .suggestion-arrow {
   opacity: 1;
   transform: translateX(0);
-  color: #7877c6;
+  color: #9ca3af;
 }
 
 /* Suggestions Footer */
@@ -438,12 +438,12 @@
 }
 
 .suggestion-item:focus {
-  outline: 2px solid #7877c6;
+  outline: 2px solid #9ca3af;
   outline-offset: -2px;
 }
 
 .search-clear-btn:focus {
-  outline: 2px solid #7877c6;
+  outline: 2px solid #9ca3af;
   outline-offset: 2px;
 }
 

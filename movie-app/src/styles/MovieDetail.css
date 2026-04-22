@@ -3,16 +3,16 @@
 
 /* CSS Variables */
 :root {
-  --primary-color: #1a1a2e;
-  --secondary-color: #16213e;
+  --primary-color: #111111;
+  --secondary-color: #141414;
   --accent-color: #e94560;
   --gold-accent: #ffd700;
   --text-primary: #ffffff;
   --text-secondary: #b8b8b8;
   --text-muted: #8a8a8a;
-  --background-dark: #0f0f23;
+  --background-dark: #0a0a0a;
   --background-card: rgba(255, 255, 255, 0.05);
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-primary: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
   --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.4);
@@ -112,13 +112,13 @@
   border-radius: 25px;
   font-weight: 600;
   font-size: 0.9rem;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3);
   transition: var(--transition);
 }
 
 .rating-badge:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(156, 163, 175, 0.4);
 }
 
 .year-badge {
@@ -287,7 +287,7 @@
   background: var(--gradient-primary);
   border-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3);
 }
 
 /* Loading and Error States */
