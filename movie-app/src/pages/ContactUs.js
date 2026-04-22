@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import "../styles/StaticPage.css";
 
 const ContactUs = () => {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -110,7 +115,9 @@ const ContactUs = () => {
                 <span className="contact-info-icon">✉️</span>
                 <div className="contact-info-text">
                   <span className="contact-info-label">Email Support</span>
-                  <span className="contact-info-value">support@movieapp.example</span>
+                  <span className="contact-info-value">
+                    support@movieapp.example
+                  </span>
                 </div>
               </div>
               <div className="contact-info-item">
@@ -124,7 +131,9 @@ const ContactUs = () => {
                 <span className="contact-info-icon">💬</span>
                 <div className="contact-info-text">
                   <span className="contact-info-label">Community</span>
-                  <span className="contact-info-value">Follow us on social media for updates and announcements.</span>
+                  <span className="contact-info-value">
+                    Follow us on social media for updates and announcements.
+                  </span>
                 </div>
               </div>
             </div>

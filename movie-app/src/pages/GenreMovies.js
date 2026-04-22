@@ -51,7 +51,9 @@ const GenreMovies = () => {
           ← Back to Home
         </Link>
         <h1 className="genre-title">{genreName}</h1>
-        <p className="genre-subtitle">Explore movies in the {genreName} genre</p>
+        <p className="genre-subtitle">
+          Explore movies in the {genreName} genre
+        </p>
       </div>
 
       <div className="genre-movies-content">

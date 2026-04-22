@@ -65,9 +65,7 @@ const TermsOfService = () => {
           <h2>4. Acceptable Use</h2>
           <p>You agree not to:</p>
           <ul>
-            <li>
-              Use the Service for any unlawful or unauthorised purpose
-            </li>
+            <li>Use the Service for any unlawful or unauthorised purpose</li>
             <li>
               Attempt to gain unauthorised access to any part of the Service or
               its infrastructure
@@ -79,9 +77,7 @@ const TermsOfService = () => {
             <li>
               Use the Service to distribute spam, malware, or harmful content
             </li>
-            <li>
-              Misrepresent your identity or impersonate another person
-            </li>
+            <li>Misrepresent your identity or impersonate another person</li>
             <li>
               Use the Service for commercial purposes without explicit written
               consent

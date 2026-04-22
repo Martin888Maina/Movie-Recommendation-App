@@ -43,9 +43,10 @@ const PrivacyPolicy = () => {
           </p>
           <h3>Usage Data</h3>
           <p>
-            We may collect anonymised information about how you interact with the
-            app — such as pages visited and search queries — to help us improve
-            the experience. This data cannot be used to identify you personally.
+            We may collect anonymised information about how you interact with
+            the app — such as pages visited and search queries — to help us
+            improve the experience. This data cannot be used to identify you
+            personally.
           </p>
           <h3>Device Information</h3>
           <p>

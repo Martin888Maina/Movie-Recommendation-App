@@ -96,7 +96,9 @@ const HelpCenter = () => {
                     aria-expanded={isOpen}
                   >
                     <span>{item.q}</span>
-                    <span className={`faq-arrow${isOpen ? " open" : ""}`}>▼</span>
+                    <span className={`faq-arrow${isOpen ? " open" : ""}`}>
+                      ▼
+                    </span>
                   </button>
                   {isOpen && <div className="faq-answer">{item.a}</div>}
                 </div>

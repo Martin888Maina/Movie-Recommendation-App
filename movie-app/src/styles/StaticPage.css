@@ -170,7 +170,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .faq-question:hover,
@@ -229,7 +231,9 @@
   color: #e2e8f0;
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   box-sizing: border-box;
   font-family: inherit;
 }
@@ -260,7 +264,9 @@
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.15s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
   font-family: inherit;
 }
 
