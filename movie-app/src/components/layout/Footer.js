@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/Footer.css";
 
 const Footer = () => {
@@ -32,6 +33,8 @@ const Footer = () => {
                 href="https://www.facebook.com/"
                 className="social-link"
                 aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <svg
                   className="social-icon"
@@ -49,6 +52,8 @@ const Footer = () => {
                 href="https://x.com/"
                 className="social-link"
                 aria-label="Twitter"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <svg
                   className="social-icon"
@@ -62,6 +67,8 @@ const Footer = () => {
                 href="https://www.instagram.com/accounts/login/?hl=en"
                 className="social-link"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <svg
                   className="social-icon"
@@ -83,24 +90,24 @@ const Footer = () => {
             <h3 className="footer-section-header">Quick Links</h3>
             <ul className="footer-links">
               <li className="footer-link-item">
-                <a href="/" className="footer-link">
+                <Link to="/" className="footer-link">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="footer-link-item">
-                <a href="/search" className="footer-link">
+                <Link to="/search" className="footer-link">
                   Browse Movies
-                </a>
+                </Link>
               </li>
               <li className="footer-link-item">
-                <a href="/trending" className="footer-link">
+                <Link to="/trending" className="footer-link">
                   Trending
-                </a>
+                </Link>
               </li>
               <li className="footer-link-item">
-                <a href="/popular" className="footer-link">
+                <Link to="/popular" className="footer-link">
                   Popular
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -110,24 +117,24 @@ const Footer = () => {
             <h3 className="footer-section-header">Support</h3>
             <ul className="footer-links">
               <li className="footer-link-item">
-                <a href="/help" className="footer-link">
+                <Link to="/help" className="footer-link">
                   Help Center
-                </a>
+                </Link>
               </li>
               <li className="footer-link-item">
-                <a href="/contact" className="footer-link">
+                <Link to="/contact" className="footer-link">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li className="footer-link-item">
-                <a href="/privacy" className="footer-link">
+                <Link to="/privacy" className="footer-link">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li className="footer-link-item">
-                <a href="/terms" className="footer-link">
+                <Link to="/terms" className="footer-link">
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -8,6 +8,11 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import GenreMovies from "./pages/GenreMovies";
+import HelpCenter from "./pages/HelpCenter";
+import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import ProtectedRoute from "../src/components/auth/ProtectedRoute";
 
 const AppRoutes = () => {
@@ -21,6 +26,19 @@ const AppRoutes = () => {
       {/* Public Routes - No authentication required */}
       <Route path="/" element={<Home />} />
       <Route path="/search" element={<Search />} />
+
+      {/* Genre browsing page */}
+      <Route path="/genre/:id" element={<GenreMovies />} />
+
+      {/* Static support pages */}
+      <Route path="/help" element={<HelpCenter />} />
+      <Route path="/contact" element={<ContactUs />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<TermsOfService />} />
+
+      {/* Footer quick-link redirects */}
+      <Route path="/trending" element={<Navigate to="/" replace />} />
+      <Route path="/popular" element={<Navigate to="/" replace />} />
 
       {/* Protected Routes - Authentication required */}
       <Route

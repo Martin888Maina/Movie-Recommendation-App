@@ -1,0 +1,67 @@
+.genre-movies-container {
+  min-height: 100vh;
+  background: #141414;
+  color: #ffffff;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+.genre-movies-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 1.5rem;
+  border-bottom: 1px solid #333333;
+}
+
+.genre-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #b3b3b3;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s ease;
+}
+
+.genre-back-link:hover {
+  color: #d1d5db;
+}
+
+.genre-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.genre-subtitle {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.genre-movies-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .genre-movies-header {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .genre-movies-content {
+    padding: 0 1rem 2rem;
+  }
+}

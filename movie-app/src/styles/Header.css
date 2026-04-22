@@ -1,18 +1,18 @@
 :root {
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  --glass-bg: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --shadow-soft: 0 4px 32px 0 rgba(31, 38, 135, 0.15);
-  --shadow-hover: 0 8px 40px 0 rgba(31, 38, 135, 0.25);
-  --shadow-elegant: 0 2px 20px rgba(0, 0, 0, 0.08);
+  --primary-gradient: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  --secondary-gradient: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
+  --accent-gradient: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+  --glass-bg: rgba(13, 13, 13, 0.97);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-soft: 0 4px 32px 0 rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 8px 40px 0 rgba(0, 0, 0, 0.7);
+  --shadow-elegant: 0 2px 20px rgba(0, 0, 0, 0.4);
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --border-radius: 12px;
   --border-radius-sm: 8px;
-  --glow-primary: 0 0 30px rgba(102, 126, 234, 0.4);
-  --glow-secondary: 0 0 25px rgba(240, 147, 251, 0.3);
+  --glow-primary: 0 0 30px rgba(156, 163, 175, 0.4);
+  --glow-secondary: 0 0 25px rgba(156, 163, 175, 0.3);
 }
 
 /* Main Header Container */
@@ -38,7 +38,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(102, 126, 234, 0.3),
+    rgba(156, 163, 175, 0.3),
     transparent
   );
 }
@@ -75,7 +75,7 @@
   border: none;
   font-size: 28px;
   font-weight: 800;
-  color: #1e40af;
+  color: #ffffff;
   cursor: pointer;
   padding: 8px 12px;
   border-radius: var(--border-radius);
@@ -165,7 +165,7 @@
 .nav-button:hover {
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+  box-shadow: 0 8px 25px rgba(156, 163, 175, 0.4);
 }
 
 .nav-button:hover::before {
@@ -200,8 +200,8 @@
 }
 
 .user-menu-button:hover {
-  color: #1e40af;
-  background: rgba(102, 126, 234, 0.1);
+  color: #d1d5db;
+  background: rgba(156, 163, 175, 0.1);
   transform: translateY(-1px);
 }
 
@@ -216,7 +216,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(156, 163, 175, 0.3);
   transition: var(--transition-smooth);
 }
 
@@ -293,7 +293,7 @@
   right: 0;
   top: calc(100% + 8px);
   min-width: 200px;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(17, 17, 17, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
@@ -319,10 +319,10 @@
 .user-email {
   padding: 12px 20px;
   font-size: 12px;
-  color: #6b7280;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 4px;
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(156, 163, 175, 0.05);
 }
 
 .dropdown-item {
@@ -333,7 +333,7 @@
   padding: 12px 20px;
   font-size: 14px;
   font-weight: 500;
-  color: #374151;
+  color: #e2e8f0;
   cursor: pointer;
   transition: var(--transition-smooth);
   position: relative;
@@ -375,8 +375,8 @@
 
 .sign-in-button {
   background: transparent;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  color: #667eea;
+  border: 1px solid rgba(156, 163, 175, 0.4);
+  color: #9ca3af;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 600;
@@ -422,7 +422,7 @@
   transition: var(--transition-smooth);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 15px rgba(156, 163, 175, 0.4);
 }
 
 .get-started-button::before {
@@ -474,8 +474,8 @@
 }
 
 .mobile-nav-button:hover {
-  color: #1e40af;
-  background: rgba(102, 126, 234, 0.1);
+  color: #d1d5db;
+  background: rgba(156, 163, 175, 0.1);
 }
 
 /* Dropdown Overlay */
@@ -594,7 +594,7 @@
 .dropdown-item:focus,
 .sign-in-button:focus,
 .get-started-button:focus {
-  outline: 2px solid #667eea;
+  outline: 2px solid #9ca3af;
   outline-offset: 2px;
 }
 
@@ -632,28 +632,28 @@
 /* Enhanced User Info Section */
 .user-info {
   padding: 12px 20px;
-  background: rgba(102, 126, 234, 0.05);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(156, 163, 175, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 4px;
 }
 
 .user-display-name {
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
+  color: #e2e8f0;
   margin-bottom: 4px;
 }
 
 .user-email {
   font-size: 12px;
-  color: #6b7280;
+  color: #94a3b8;
   word-break: break-all;
 }
 
 /* Dropdown Divider */
 .dropdown-divider {
   height: 1px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   margin: 4px 0;
 }
 
@@ -666,7 +666,7 @@
   padding: 12px 20px;
   font-size: 14px;
   font-weight: 500;
-  color: #374151;
+  color: #e2e8f0;
   cursor: pointer;
   transition: var(--transition-smooth);
   position: relative;
@@ -711,7 +711,7 @@
 /* Special styling for logout button */
 .logout-item {
   color: #dc2626;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 4px;
 }
 
@@ -726,8 +726,8 @@
 /* Active navigation states */
 .nav-button.active,
 .mobile-nav-button.active {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  color: #9ca3af;
+  background: rgba(156, 163, 175, 0.1);
   font-weight: 700;
 }
 
@@ -787,7 +787,7 @@
   right: 0;
   top: calc(100% + 8px);
   min-width: 220px;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(17, 17, 17, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
@@ -812,9 +812,9 @@
 
 /* Enhanced focus states */
 .dropdown-item:focus {
-  outline: 2px solid #667eea;
+  outline: 2px solid #9ca3af;
   outline-offset: -2px;
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(156, 163, 175, 0.1);
 }
 
 /* Improved mobile responsiveness */
@@ -870,12 +870,12 @@
 
 /* Keyboard navigation improvements */
 .dropdown-item:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid #9ca3af;
   outline-offset: -2px;
 }
 
 .user-menu-button:focus-visible {
-  outline: 2px solid #667eea;
+  outline: 2px solid #9ca3af;
   outline-offset: 2px;
 }
 
